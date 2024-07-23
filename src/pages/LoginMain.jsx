@@ -16,9 +16,11 @@ const BowlRiceImg = styled.img`
   height: 111px;
   width: 111px;
 `;
-
+const WrapLoginBtn = styled.div`
+  padding: 237px 0 121px 0;
+`;
 const KakaoAuthImg = styled.img`
-  margin: 237px 0 121px 0;
+  height: 45px;
   cursor: pointer;
 `;
 
@@ -36,9 +38,11 @@ export default function LoginMain() {
       <GongGothicFontStyle />
       <BowlRiceImg src='/assets/icons/bowl-rice.png' />
       <LoginMainTxt>집밥코인</LoginMainTxt>
-      <Link to='/home'>
-        <KakaoAuthImg src='/assets/images/kakao_login_btn.png' />
-      </Link>
+      <WrapLoginBtn>
+        <Link to='/home'>
+          <KakaoAuthImg src='/assets/images/kakao_login_btn.png' />
+        </Link>
+      </WrapLoginBtn>
     </WrapLoginMain>
   );
 }
