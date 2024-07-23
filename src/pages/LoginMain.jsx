@@ -26,6 +26,7 @@ const LoginMainTxt = styled.div`
   color: #ffffff;
   font-size: 3rem;
   font-family: 'GongGothic', sans-serif;
+  font-weight: bold;
   margin: 9px;
 `;
 
