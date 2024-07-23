@@ -43,7 +43,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <RouterProvider router={router} />
+  <>
+    <RouterProvider router={router} />
+    <meta name='viewport' content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' />
+  </>
   // </React.StrictMode>
 );
 
