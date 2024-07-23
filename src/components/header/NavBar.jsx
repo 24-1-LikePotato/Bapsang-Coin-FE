@@ -26,9 +26,9 @@ const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
   width: 3rem;
-  color: ${({ $isActive }) => ($isActive ? '#000000' : '#8c8c8c')};
+  color: ${({ $isActive }) => ($isActive ? '#3D3D3D' : '#8c8c8c')};
   text-decoration: none;
 `;
 
