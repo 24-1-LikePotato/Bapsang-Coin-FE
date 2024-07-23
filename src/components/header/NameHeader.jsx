@@ -12,7 +12,7 @@ const Header = styled.header`
   justify-content: center;
   padding: 12px;
   height: 32px;
-  background-color: #fff9f2;
+  background-color: #fff7ec;
   color: #3d3d3d;
   position: relative;
 `;
