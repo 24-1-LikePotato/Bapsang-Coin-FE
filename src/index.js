@@ -31,11 +31,12 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'Ingredients', element: <Ingredients /> },
-      { path: 'Recipe/:RecipeId', element: <Recipe /> },
-      { path: 'Refrigerator', element: <Refrigerator /> },
-      { path: 'AddIngredient/1', element: <AddIngredientOne /> },
-      { path: 'AddIngredient/2', element: <AddIngredientTwo /> },
+      { path: 'ingredients', element: <Ingredients /> },
+      { path: 'ingredients/:IngredientId', element: <Ingredients /> },
+      { path: 'recipe/:IngredientId/:RecipeId', element: <Recipe /> },
+      { path: 'refrigerator', element: <Refrigerator /> },
+      { path: 'addIngredient/1', element: <AddIngredientOne /> },
+      { path: 'addIngredient/2', element: <AddIngredientTwo /> },
     ],
   },
 ]);
