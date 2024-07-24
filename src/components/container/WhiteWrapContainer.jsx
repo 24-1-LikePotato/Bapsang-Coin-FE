@@ -10,6 +10,10 @@ const WhiteContainer = styled.div`
   padding-bottom: 3px;
 `;
 
-export default function WhiteWrapContainer({ width, height }) {
-  return <WhiteContainer width={width} height={height}></WhiteContainer>;
+export default function WhiteWrapContainer({ width, height, children }) {
+  return (
+    <WhiteContainer width={width} height={height}>
+      {children}
+    </WhiteContainer>
+  );
 }
