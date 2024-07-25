@@ -34,13 +34,14 @@ const StyledLink = styled(Link)`
 
 export default function NavBar() {
   const location = useLocation();
+  const currentPath = location.pathname.toLowerCase();
 
   return (
     <WrapNavBar>
-      <StyledLink to='/home' $isActive={location.pathname === '/home'}>
+      <StyledLink to='/home' $isActive={currentPath === '/home'}>
         <StyledIcon as={FiHome} width='22px' height='21px' />홈
       </StyledLink>
-      <StyledLink to='/home/Ingredients' $isActive={location.pathname === '/home/Ingredients'}>
+      <StyledLink to='/home/Ingredients' $isActive={currentPath.startsWith('/home/ingredients')}>
         <StyledIcon as={BsBasket} width='22px' height='21px' />
         식재료
       </StyledLink>
