@@ -45,7 +45,7 @@ export default function NavBar() {
         <StyledIcon as={BsBasket} width='22px' height='21px' />
         식재료
       </StyledLink>
-      <StyledLink to='/home/Refrigerator' $isActive={location.pathname === '/home/Refrigerator'}>
+      <StyledLink to='/home/refrigerator' $isActive={currentPath === '/home/refrigerator'}>
         <StyledIcon as={CgSmartHomeRefrigerator} width='22px' height='21px' />내 냉장고
       </StyledLink>
     </WrapNavBar>
