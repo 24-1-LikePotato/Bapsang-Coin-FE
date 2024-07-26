@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
+import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,10 +22,8 @@ const Title = styled.h2`
 
 const ContentWrapper = styled.div`
   display: flex;
-  position: absolute;
-  top: 450px;
-  left: 40px;
   gap: 15px;
+  margin-top: 20px;
 `;
 
 const ContentBox = styled.div`
@@ -37,6 +36,7 @@ const ContentBox = styled.div`
 
 const TextWrapper = styled.div`
   margin-left: 11px;
+  margin-right: 11px;
 `;
 
 const Name = styled.p`
@@ -62,9 +62,8 @@ const Rate = styled.p`
 export default function Recommend() {
   const navigate = useNavigate();
 
-
   //추천 식재료 임의 데이터 설정
-  const [recommendItems, setRecommendItems] = useState([      
+  const [recommendItems, setRecommendItems] = useState([
     { id: "id1", name: "", price: "", rate: "" },
     { id: "id2", name: "", price: "", rate: "" },
     { id: "id3", name: "", price: "", rate: "" },
@@ -79,17 +78,19 @@ export default function Recommend() {
     <Wrapper>
       <WhiteWrapContainer height="192px">
         <Title>추천 식재료</Title>
-        <ContentWrapper>
-          {recommendItems.map((item) => (
-            <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
-              <TextWrapper>
-                <Name>감자{item.name}</Name>
-                <Price>1,234{item.price}원</Price>
-                <Rate>-1.1{item.rate}%</Rate>
-              </TextWrapper>
-            </ContentBox>
-          ))}
-        </ContentWrapper>
+        <HorizontalScrollContainer height="120px">
+          <ContentWrapper>
+            {recommendItems.map((item) => (
+              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+                <TextWrapper>
+                  <Name>감자{item.name}</Name>
+                  <Price>1,234{item.price}원</Price>
+                  <Rate>-1.1{item.rate}%</Rate>
+                </TextWrapper>
+              </ContentBox>
+            ))}
+          </ContentWrapper>
+        </HorizontalScrollContainer>
       </WhiteWrapContainer>
     </Wrapper>
   );

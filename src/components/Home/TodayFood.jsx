@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import ImageContainer from "../container/ImageContainer";
-
+import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,10 +22,8 @@ const Title = styled.h2`
 `;
 const ContentWrapper = styled.div`
   display: flex;
-  position: absolute;
-  top: 660px;
-  left: 30px;
   gap: 15px;
+  margin-top: 20px;
 `;
 
 const ContentBox = styled.div`
@@ -34,6 +32,7 @@ const ContentBox = styled.div`
   border-radius: 20px;
   background-color: #fff9f2;
   cursor: pointer;
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 설정 */
 `;
 const WrapImageContainer = styled.div`
   display: flex;
@@ -47,11 +46,18 @@ const Image = styled.img`
   max-height: 100%;
   object-fit: cover;
 `;
+
 const Text = styled.p`
   margin-left: 23px;
+  margin-right: 23px;
   font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal; /* white-space 속성을 normal로 설정 */
+  height: calc(1em * 3); /* 높이 설정 */
 `;
 
 export default function TodayFood() {
@@ -72,22 +78,24 @@ export default function TodayFood() {
     <Wrapper>
       <WhiteWrapContainer height="446px">
         <Title>오늘의 집밥</Title>
+        <HorizontalScrollContainer height="357px">
+          <ContentWrapper>
+            {foodItems.map((item) => (
+              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+                <WrapImageContainer>
+                  <ImageContainer width="200px" height="200px">
+                    <Image src={item.image} alt={item.text} />
+                  </ImageContainer>
+                </WrapImageContainer>
 
-        <ContentWrapper>
-          {foodItems.map((item) => (
-            <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
-              <WrapImageContainer>
-                <ImageContainer width="200px" height="200px">
-                  <Image src={item.image} alt={item.text} />
-                </ImageContainer>
-              </WrapImageContainer>
-
-              <Text>
-                유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드{item.text}
-              </Text>
-            </ContentBox>
-          ))}
-        </ContentWrapper>
+                <Text>
+                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드 aaa
+                  {item.text}
+                </Text>
+              </ContentBox>
+            ))}
+          </ContentWrapper>
+        </HorizontalScrollContainer>
       </WhiteWrapContainer>
     </Wrapper>
   );
