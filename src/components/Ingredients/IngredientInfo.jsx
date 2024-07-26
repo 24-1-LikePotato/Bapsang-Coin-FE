@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import WhiteWrapContainer from '../container/WhiteWrapContainer';
 import TitleTextContainer from '../container/TitleTextContainer';
+import GraphContainer from '../container/GraphContainer';
 
 const WrapIngredientPrice = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const WrapIngredientPrice = styled.div`
 `;
 
 const IngredientPriceText = styled.div`
-  margin: 24px 12px 8px 12px;
+  margin: 8px 12px 8px 12px;
   font-size: 16px;
   strong {
     margin-right: 12px;
@@ -26,6 +27,24 @@ const PriceFluctionRate = styled.span`
 export default function IngredientInfo({ IngredientId }) {
   // 추후 데이터 형식 수정 될 가능성 있음
   const [ingredient, setIngredient] = useState({ name: '감자', priceFluctuationRate: '-1.1', priceToday: 1234 });
+  const [priceChanges, setPriceChanges] = useState({
+    id: '감자',
+    color: 'hsl(116, 70%, 50%)',
+    data: [
+      { x: '1', y: 31000 },
+      { x: '2', y: 31000 },
+      { x: '3', y: 30000 },
+      { x: '4', y: 32000 },
+      { x: '5', y: 33000 },
+      { x: '6', y: 35000 },
+      { x: '7', y: 31000 },
+      { x: '8', y: 29000 },
+      { x: '9', y: 28000 },
+      { x: '10', y: 28000 },
+      { x: '11', y: 29000 },
+      { x: '12', y: 31000 },
+    ],
+  });
 
   return (
     <WhiteWrapContainer width='92.5%' height='383px'>
@@ -42,6 +61,7 @@ export default function IngredientInfo({ IngredientId }) {
           </PriceFluctionRate>
         </IngredientPriceText>
       </WrapIngredientPrice>
+      <GraphContainer data={[priceChanges]} />
     </WhiteWrapContainer>
   );
 }
