@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const WhiteContainer = styled.div`
-  width: ${({ width }) => width || '95%'};
+  width: ${({ width }) => width || '92.5%'};
   height: ${({ height }) => height || '100vh'};
   margin-bottom: 16px;
   background-color: white;
