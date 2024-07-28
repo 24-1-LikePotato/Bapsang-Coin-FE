@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../components/fonts/OpenSans.css';
+import StyledButton from '../components/Button/StyledButton'
 
 const WrapAddIngredient = styled.div`
   background-color: #fff7ec;
@@ -47,7 +49,32 @@ const InputText = styled.input`
   }
 `
 
+const WrapButton = styled.div`
+  margin: 6.063rem auto auto auto;
+`
+
 export default function AddIngredientOne() {
+  const [Ingredient, setIngredient] = useState("");
+  const [Date, setDate] = useState(0);
+  const navigate = useNavigate();
+
+  const changeIngredient = (e) => {
+    setIngredient(e.target.value);
+  }
+
+  const changeDate = (e) => {
+    setDate(e.target.value);
+  }
+
+  const handleIngredientInfo = ({ Ingredient, Date }) => {
+    navigate("/home/addIngredient/2", {
+      state: {
+        ingredient_name: `${ Ingredient }`,
+        expiration_date: `${ Date }`,
+      },
+    });
+  };
+
   return (
     <WrapAddIngredient>
       <InputRequest>
@@ -59,6 +86,7 @@ export default function AddIngredientOne() {
       <InputText
         type="text"
         placeholder="식재료를 입력해주세요."
+        onChange={ changeIngredient }
       />
       <InputType>
         소비기한
@@ -66,7 +94,17 @@ export default function AddIngredientOne() {
       <InputText
         type="number"
         placeholder="소비기한을 입력해주세요."
+        onChange={ changeDate }
       />
+      <WrapButton>
+        <StyledButton
+          width='11.875rem'
+          text='등록하기'
+          color='#F5F4F1'
+          buttoncolor='#FFAA2F'
+          onClick={() => handleIngredientInfo({ Ingredient, Date})}
+        />
+      </WrapButton>
     </WrapAddIngredient>
   );
 }
