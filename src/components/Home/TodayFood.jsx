@@ -24,6 +24,8 @@ const ContentWrapper = styled.div`
   display: flex;
   gap: 15px;
   margin-top: 20px;
+  overflow-y: hidden; /* 세로 스크롤 방지 */
+  position: relative; /* 컨테이너 위치 고정 */
 `;
 
 const ContentBox = styled.div`
@@ -89,7 +91,7 @@ export default function TodayFood() {
                 </WrapImageContainer>
 
                 <Text>
-                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드 aaa
+                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드 
                   {item.text}
                 </Text>
               </ContentBox>
