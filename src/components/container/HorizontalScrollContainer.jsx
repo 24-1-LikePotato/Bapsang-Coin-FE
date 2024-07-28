@@ -6,6 +6,7 @@ const HorizontalContainer = styled.div`
   height: ${({ height }) => height || 'auto'};
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: hidden; /* 세로 스크롤 방지 */
   cursor: grab;
 
   &::-webkit-scrollbar {
