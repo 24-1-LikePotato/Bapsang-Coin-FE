@@ -56,6 +56,7 @@ export default function RelatedIngredients({ IngredientId }) {
             height='24px'
             key={recipe.id}
             accent={selectedRecipeId === recipe.id}
+            marginRight='5px'
             onClick={() => handleButtonClick(recipe.id)}
           >
             {recipe.title}
