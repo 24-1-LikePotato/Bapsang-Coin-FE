@@ -25,9 +25,13 @@ const ContentWrapper = styled.div`
   gap: 15px;
   margin-top: 20px;
   overflow-y: hidden; /* 세로 스크롤 방지 */
-  overflow-x: auto; /* 가로 스크롤 허용 */
+  overflow-x: auto; 
   position: relative; /* 컨테이너 위치 고정 */
-  width: 100%; /* 부모 컨테이너의 너비를 상속받음 */
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ContentBox = styled.div`
@@ -93,7 +97,7 @@ export default function TodayFood() {
                 </WrapImageContainer>
 
                 <Text>
-                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드 
+                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드
                   {item.text}
                 </Text>
               </ContentBox>
