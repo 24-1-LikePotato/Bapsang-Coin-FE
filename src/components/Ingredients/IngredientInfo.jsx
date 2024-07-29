@@ -13,7 +13,7 @@ const WrapIngredientPrice = styled.div`
 
 const IngredientPriceText = styled.div`
   margin: 8px 12px;
-  font-size: 4vw;
+  font-size: min(4vw, 16px);
   strong {
     margin-right: 12px;
   }
