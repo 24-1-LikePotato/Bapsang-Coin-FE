@@ -48,6 +48,7 @@ export default function AddIngredientTwo() {
           options={{
             strings: [infoText],
             autoStart: true,
+            delay: 50,
             deleteSpeed: 99999999,
           }}
         />
