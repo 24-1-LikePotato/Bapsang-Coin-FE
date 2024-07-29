@@ -67,12 +67,20 @@ export default function AddIngredientOne() {
   }
 
   const handleIngredientInfo = ({ Ingredient, Date }) => {
-    navigate("/home/addIngredient/2", {
-      state: {
-        ingredient_name: `${ Ingredient }`,
-        expiration_date: `${ Date }`,
-      },
-    });
+    if (Ingredient === "") {
+      alert("식재료를 입력해주세요.")
+    }
+    else if (Date === 0) {
+      alert("소비기한을 입력해주세요.")
+    }
+    else {
+      navigate("/home/addIngredient/2", {
+        state: {
+          ingredient_name: `${ Ingredient }`,
+          expiration_date: `${ Date }`,
+        },
+      });
+    }
   };
 
   return (
