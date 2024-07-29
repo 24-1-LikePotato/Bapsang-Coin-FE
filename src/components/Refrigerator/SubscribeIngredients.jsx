@@ -46,5 +46,5 @@ const WrapSubscribeText = styled.div`
 `;
 
 const SubscribeIngredientsText = styled.div`
-  font-size: 4vw;
+  font-size: min(4vw, 16px);
 `;
