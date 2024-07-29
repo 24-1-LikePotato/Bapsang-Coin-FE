@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import Typewriter from 'typewriter-effect';
 import '../components/fonts/OpenSans.css';
 import StyledButton from '../components/Button/StyledButton'
 
@@ -36,11 +37,21 @@ const WrapButton = styled.div`
 export default function AddIngredientTwo() {
   const navigate = useNavigate();
   const location = useLocation();
+  const infoText = `입력하신 식재료<br/>
+  '${location.state.ingredient_name}'의<br/>
+  소비기한은 ${location.state.expiration_date}일입니다.`;
 
   return (
     <WrapAddIngredient>
       <InfoCheck>
-        입력하신 식재료<br/>'{ location.state.ingredient_name }'의<br/>소비기한은 { location.state.expiration_date }일입니다.
+        <Typewriter
+          options={{
+            strings: [infoText],
+            autoStart: true,
+            delay: 50,
+            deleteSpeed: 99999999,
+          }}
+        />
       </InfoCheck>
       <RequestCheck>
         이대로 등록하시겠습니까?
