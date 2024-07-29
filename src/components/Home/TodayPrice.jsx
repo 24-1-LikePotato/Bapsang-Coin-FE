@@ -24,6 +24,7 @@ const IncreaseWrapper = styled.div`  //최고 가격
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  
 `;
 const IncreaseImg = styled.img`
   margin-top: 24px;
@@ -34,8 +35,8 @@ const Increase_TextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 25px;
-  margin-left: 25px;
-  font-size: 1rem;
+  margin-left: 23px;
+  font-size: min(4vw, 16px); //기기 호환을 위한 폰트 단위 수정
 `;
 
 const Increase_Name = styled.p`
@@ -71,7 +72,7 @@ const Decrease_TextWrapper = styled.div`
   flex-direction: row;
   margin-top: 18px;
   margin-left: 23px;
-  font-size: 1rem;
+  font-size: min(4vw, 16px);
 `;
 
 const Decrease_Name = styled.p`
