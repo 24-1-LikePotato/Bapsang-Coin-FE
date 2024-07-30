@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import IngredientDateRemain from './IngredientDateRemain';
 import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 // 배열을 쪼개는 함수
 const chunkArray = (array, size) => {
@@ -30,12 +31,15 @@ export default function RefrigeratorGrid() {
     { id: '13', name: 'title13', remainDate: '14' },
   ]);
   const [selectedId, setSelectedId] = useState(null);
+  const [isDeleteConfirmed, setDeleteConfirmed] = useState(false);
+
   // 내 냉장고 데이터 9개로 쪼개기
   const chunkedIngredients = chunkArray(ingredients, 9);
 
   const handleDelete = (id) => {
     setIngredients((prevIngredients) => prevIngredients.filter((ingredient) => ingredient.id !== id));
     setSelectedId(null);
+    setDeleteConfirmed(true);
   };
 
   const handleSelect = (id) => {
@@ -48,6 +52,10 @@ export default function RefrigeratorGrid() {
     }
   };
 
+  const handleCloseModal = () => {
+    setDeleteConfirmed(false);
+  };
+
   // 바깥 클릭시 selectedId 해제
   useEffect(() => {
     document.addEventListener('click', handleOutsideClick);
@@ -57,30 +65,33 @@ export default function RefrigeratorGrid() {
   }, []);
 
   return (
-    <WrapGridContainer>
-      <HorizontalScrollContainer width='266px' height='380px'>
-        <HorizontalWrapper>
-          {chunkedIngredients.map((chunk, chunkIdx) => (
-            <ContainerWrapper key={chunkIdx}>
-              <WrapChunk>
-                {chunk.map((ingredient, idx) => (
-                  <IngredientDateRemain
-                    className='ingredient-item'
-                    ingredientName={ingredient.name}
-                    ingredientRemain={ingredient.remainDate}
-                    id={ingredient.id}
-                    isSelected={selectedId === ingredient.id}
-                    onDelete={handleDelete}
-                    onSelect={handleSelect}
-                    key={ingredient.id}
-                  />
-                ))}
-              </WrapChunk>
-            </ContainerWrapper>
-          ))}
-        </HorizontalWrapper>
-      </HorizontalScrollContainer>
-    </WrapGridContainer>
+    <>
+      <WrapGridContainer>
+        <HorizontalScrollContainer width='266px' height='380px'>
+          <HorizontalWrapper>
+            {chunkedIngredients.map((chunk, chunkIdx) => (
+              <ContainerWrapper key={chunkIdx}>
+                <WrapChunk>
+                  {chunk.map((ingredient, idx) => (
+                    <IngredientDateRemain
+                      className='ingredient-item'
+                      ingredientName={ingredient.name}
+                      ingredientRemain={ingredient.remainDate}
+                      id={ingredient.id}
+                      isSelected={selectedId === ingredient.id}
+                      onDelete={handleDelete}
+                      onSelect={handleSelect}
+                      key={ingredient.id}
+                    />
+                  ))}
+                </WrapChunk>
+              </ContainerWrapper>
+            ))}
+          </HorizontalWrapper>
+        </HorizontalScrollContainer>
+      </WrapGridContainer>
+      <DeleteConfirmationModal isVisible={isDeleteConfirmed} onClose={handleCloseModal} />
+    </>
   );
 }
 
