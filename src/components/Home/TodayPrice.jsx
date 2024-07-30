@@ -29,7 +29,7 @@ const IncreaseWrapper = styled.div`
 const IncreaseImg = styled.img`
   margin-top: 24px;
 `;
-const Increase_TextWrapper = styled.div`
+const IncreaseTextWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -39,18 +39,18 @@ const Increase_TextWrapper = styled.div`
   font-size: min(3.9vw, 16px); //폰트 단위 수정
 `;
 
-const Increase_Name = styled.p`
+const IncreaseName = styled.p`
   font-weight: 500;
   color: #3d3d3d;
 `;
 
-const Increase_Price = styled.p`
+const IncreasePrice = styled.p`
   font-weight: 500;
   color: #3d3d3d;
   margin-left: 19px;
 `;
 
-const Increase_Rate = styled.p`
+const IncreaseRate = styled.p`
   font-weight: 500;
   color: #ff0000;
   margin-left: 90px;
@@ -68,7 +68,7 @@ const DecreaseImg = styled.img`
   margin-top: 23px;
 `;
 
-const Decrease_TextWrapper = styled.div`
+const DecreaseTextWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -78,18 +78,18 @@ const Decrease_TextWrapper = styled.div`
   font-size: min(3.9vw, 16px);
 `;
 
-const Decrease_Name = styled.p`
+const DecreaseName = styled.p`
   font-weight: 500;
   color: #3d3d3d;
 `;
 
-const Decrease_Price = styled.p`
+const DecreasePrice = styled.p`
   font-weight: 500;
   color: #3d3d3d;
   margin-left: 19px;
 `;
 
-const Decrease_Rate = styled.p`
+const DecreaseRate = styled.p`
   font-weight: 500;
   color: #0066ff;
   margin-left: 90px;
@@ -121,22 +121,22 @@ export default function TodayPrice() {
         <Title>오늘의 식재료 가격</Title>
         <IncreaseWrapper>
           <IncreaseImg src="/assets/icons/increase.png"></IncreaseImg>
-          <Increase_TextWrapper>
-            <Increase_Name>{highestPriceItem.name}</Increase_Name>
-            <Increase_Price>{highestPriceItem.price} 원</Increase_Price>
-            <Increase_Rate>{highestPriceItem.rate}%</Increase_Rate>
-          </Increase_TextWrapper>
+          <IncreaseTextWrapper>
+            <IncreaseName>{highestPriceItem.name}</IncreaseName>
+            <IncreasePrice>{highestPriceItem.price} 원</IncreasePrice>
+            <IncreaseRate>{highestPriceItem.rate}%</IncreaseRate>
+          </IncreaseTextWrapper>
         </IncreaseWrapper>
 
         <Bar></Bar>
 
         <DecreaseWrapper>
           <DecreaseImg src="/assets/icons/decrease.png"></DecreaseImg>
-          <Decrease_TextWrapper>
-            <Decrease_Name>{lowestPriceItem.name}</Decrease_Name>
-            <Decrease_Price>{lowestPriceItem.price} 원</Decrease_Price>
-            <Decrease_Rate>{lowestPriceItem.rate}%</Decrease_Rate>
-          </Decrease_TextWrapper>
+          <DecreaseTextWrapper>
+            <DecreaseName>{lowestPriceItem.name}</DecreaseName>
+            <DecreasePrice>{lowestPriceItem.price} 원</DecreasePrice>
+            <DecreaseRate>{lowestPriceItem.rate}%</DecreaseRate>
+          </DecreaseTextWrapper>
         </DecreaseWrapper>
       </WhiteWrapContainer>
     </Wrapper>
