@@ -15,7 +15,7 @@ const WrapNavBar = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4rem;
+  height: 4.5rem;
   background-color: #ffffff;
   border-top: 1px solid #e3e3e3;
   border-top-right-radius: 25px;
@@ -39,14 +39,14 @@ export default function NavBar() {
   return (
     <WrapNavBar>
       <StyledLink to='/home' $isActive={currentPath === '/home'}>
-        <StyledIcon as={FiHome} width='22px' height='21px' />홈
+        <StyledIcon as={FiHome} width='24px' height='23px' />홈
       </StyledLink>
       <StyledLink to='/home/Ingredients' $isActive={currentPath.startsWith('/home/ingredients')}>
-        <StyledIcon as={BsBasket} width='22px' height='21px' />
+        <StyledIcon as={BsBasket} width='24px' height='23px' />
         식재료
       </StyledLink>
       <StyledLink to='/home/refrigerator' $isActive={currentPath === '/home/refrigerator'}>
-        <StyledIcon as={CgSmartHomeRefrigerator} width='22px' height='21px' />내 냉장고
+        <StyledIcon as={CgSmartHomeRefrigerator} width='24px' height='23px' />내 냉장고
       </StyledLink>
     </WrapNavBar>
   );
