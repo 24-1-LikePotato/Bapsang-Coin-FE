@@ -14,15 +14,15 @@ export default function IngredientDateRemain({ ingredientName, ingredientRemain,
 
   return (
     <WrapIngredientDateRemain className='ingredient-item' onClick={() => onSelect(id)}>
-      <WhiteWrapContainer width='74px' height='90px'>
+      <StyledWhiteWrapContainer width='74px' height='90px'>
         <IngredientDateRemainText>
-          {ingredientName}
-          <strong>{ingredientRemain}일 남음</strong>
           <DeleteButton $isSelected={isSelected} onClick={handleDeleteClick}>
             <RxCross2 />
           </DeleteButton>
+          {ingredientName}
+          <strong>{ingredientRemain}일 남음</strong>
         </IngredientDateRemainText>
-      </WhiteWrapContainer>
+      </StyledWhiteWrapContainer>
       {isModalOpen && <RefrigeratorModalOverlay onDelete={onDelete} setModalOpen={setModalOpen} id={id} />}
     </WrapIngredientDateRemain>
   );
@@ -32,12 +32,22 @@ const WrapIngredientDateRemain = styled.div`
   margin-top: 4px;
 `;
 
+const StyledWhiteWrapContainer = styled(WhiteWrapContainer)`
+  position: relative;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+`;
+
 const IngredientDateRemainText = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 12px;
+  width: 100%;
+  height: 100%;
 
   strong {
     margin-top: 8px;
@@ -47,8 +57,8 @@ const IngredientDateRemainText = styled.div`
 
 const DeleteButton = styled.button`
   position: absolute;
-  top: -28px;
-  left: -12px;
+  bottom: 50px;
+  right: 32px;
   background-color: rgba(108, 108, 108, 0.2);
   color: white;
   border: none;
