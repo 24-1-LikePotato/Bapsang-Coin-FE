@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import WhiteWrapContainer from '../container/WhiteWrapContainer';
 import TitleTextContainer from '../container/TitleTextContainer';
 import GraphContainer from '../container/GraphContainer';
+import GraphDataEmpty from './GraphDataEmpty';
 
 const WrapIngredientPrice = styled.div`
   display: flex;
@@ -31,20 +32,19 @@ export default function IngredientInfo({ IngredientId }) {
     id: '감자',
     color: 'hsl(116, 70%, 50%)',
     data: [
-      { x: '1', y: 31000 },
-      { x: '2', y: 31000 },
-      { x: '3', y: 30000 },
-      { x: '4', y: 32000 },
-      { x: '5', y: 33000 },
-      { x: '6', y: 35000 },
-      { x: '7', y: 31000 },
-      { x: '8', y: 29000 },
-      { x: '9', y: 28000 },
-      { x: '10', y: 28000 },
-      { x: '11', y: 29000 },
-      { x: '12', y: 31000 },
+      { x: '40일전', y: 31000 },
+      { x: '30일전', y: 31000 },
+      { x: '20일전', y: 30000 },
+      { x: '10일전', y: 32000 },
+      { x: '현재', y: 33000 },
+      // { x: '40일전', y: null },
+      // { x: '30일전', y: null },
+      // { x: '20일전', y: null },
+      // { x: '10일전', y: null },
+      // { x: '현재', y: null },
     ],
   });
+  const isDataEmpty = priceChanges.data.every((point) => point.y === null || point.y === undefined || point.y === '');
 
   return (
     <WhiteWrapContainer width='92.5%' height='383px'>
@@ -61,7 +61,7 @@ export default function IngredientInfo({ IngredientId }) {
           </PriceFluctionRate>
         </IngredientPriceText>
       </WrapIngredientPrice>
-      <GraphContainer data={[priceChanges]} />
+      {isDataEmpty ? <GraphDataEmpty /> : <GraphContainer data={[priceChanges]} />}
     </WhiteWrapContainer>
   );
 }

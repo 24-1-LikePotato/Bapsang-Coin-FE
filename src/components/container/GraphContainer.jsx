@@ -5,7 +5,7 @@ export default function GraphContainer({ data }) {
   return (
     <ResponsiveLine
       data={data}
-      margin={{ top: 20, right: 5, bottom: 90, left: 45 }}
+      margin={{ top: 20, right: 10, bottom: 90, left: 45 }}
       xScale={{ type: 'point' }}
       yScale={{
         type: 'linear',
