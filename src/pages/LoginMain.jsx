@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import GongGothicFontStyle from '../components/fonts/GongGothicFontStyle';
 import { Link } from 'react-router-dom';
+import GongGothicBoldFontStyle from '../components/fonts/GongGothicBoldFontStyle';
 
 const WrapLoginMain = styled.div`
   background-color: #ffaa2f;
@@ -29,8 +29,7 @@ const KakaoAuthImg = styled.img`
 const LoginMainTxt = styled.div`
   color: #ffffff;
   font-size: 6vh;
-  font-family: 'GongGothic', sans-serif;
-  font-weight: bold;
+  font-family: 'GongGothicBold', sans-serif;
   margin: 1vh;
   text-align: center;
 `;
@@ -38,7 +37,7 @@ const LoginMainTxt = styled.div`
 export default function LoginMain() {
   return (
     <WrapLoginMain>
-      <GongGothicFontStyle />
+      <GongGothicBoldFontStyle />
       <BowlRiceImg src='/assets/icons/bowl-rice.png' />
       <LoginMainTxt>집밥코인</LoginMainTxt>
       <WrapLoginBtn>
