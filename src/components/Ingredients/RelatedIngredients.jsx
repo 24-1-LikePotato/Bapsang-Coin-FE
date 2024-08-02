@@ -13,15 +13,14 @@ import TitleTextContainer from '../container/TitleTextContainer';
 // 추후 IngredientId 로 식재료에 있는 recipes 가져오기
 export default function RelatedIngredients({ IngredientId }) {
   const navigate = useNavigate();
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [recipes, setRecipes] = useState([
-    // 임시 데이터
     { id: '1', title: 'title1', img: 'image1' },
     { id: '2', title: 'title2', img: 'image2' },
     { id: '3', title: 'title3', img: 'image3' },
     { id: '4', title: 'title4', img: 'image4' },
     { id: '5', title: 'title5', img: 'image5' },
   ]);
-  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
 
   useEffect(() => {
     if (recipes.length > 0) {

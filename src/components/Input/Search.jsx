@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { IoSearchOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React from 'react';
+import styled from 'styled-components';
+import { IoSearchOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const SearchForm = styled.form`
   display: flex;
@@ -42,17 +42,22 @@ const SearchIcon = styled(IoSearchOutline)`
 
 export default function Search() {
   const navigate = useNavigate();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!text) alert("검색어를 입력해주세요");
-    else navigate(`/home/Ingredients/${text}`);
+    if (!text) {
+      alert('검색어를 입력해주세요');
+    } else {
+      navigate(`/home/Ingredients/${text}`);
+    }
   };
+
   return (
     <SearchForm onSubmit={handleSubmit}>
       <SearchContainer>
         <SearchInput
-          placeholder="식재료를 입력하세요. (ex. 감자, 오이...)"
+          placeholder='식재료를 입력하세요. (ex. 감자, 오이...)'
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
