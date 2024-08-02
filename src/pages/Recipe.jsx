@@ -47,7 +47,6 @@ export default function Recipe() {
 
     axios.get(apiURL + endpoint)
       .then((res) => {
-        console.log(res.data);
         setRecipe({
           name: res.data.name,
           content: res.data.content,
