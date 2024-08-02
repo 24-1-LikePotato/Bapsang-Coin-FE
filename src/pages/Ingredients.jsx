@@ -55,7 +55,7 @@ export default function Ingredients() {
       ) : (
         <>
           <IngredientInfo IngredientId={IngredientId} dayPrice={dayPrice} graphData={graphData} />
-          <RelatedIngredients IngredientId={IngredientId} />
+          <RelatedIngredients IngredientId={IngredientId} dayPrice={dayPrice} />
         </>
       )}
     </WrapIngredients>

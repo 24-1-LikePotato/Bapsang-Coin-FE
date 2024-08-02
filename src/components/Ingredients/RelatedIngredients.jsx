@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import TitleTextContainer from '../container/TitleTextContainer';
 import axios from 'axios';
 
-export default function RelatedIngredients({ IngredientId }) {
+export default function RelatedIngredients({ IngredientId, dayPrice }) {
   const navigate = useNavigate();
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [recipes, setRecipes] = useState(null);
@@ -31,7 +31,7 @@ export default function RelatedIngredients({ IngredientId }) {
         });
     } else {
       axios
-        .get(`https://zipbab-coin.p-e.kr//main/related-recipe`)
+        .get(`https://zipbab-coin.p-e.kr/main/related-recipe`)
         .then((res) => {
           setRecipes(res.data);
           if (res.data.length > 0) {
@@ -56,7 +56,7 @@ export default function RelatedIngredients({ IngredientId }) {
 
   const handleDetailButtonClick = () => {
     if (selectedRecipeId) {
-      navigate(`/home/recipe/${IngredientId}/${selectedRecipeId}`);
+      navigate(`/home/recipe/${dayPrice.ingredient.name}/${selectedRecipeId}`);
     }
   };
 
