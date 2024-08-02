@@ -100,7 +100,7 @@ export default function Recommend() {
               <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
                 <TextWrapper>
                   <Name>{item.ingredient_name}</Name>
-                  <Price>{item.price}원</Price>
+                  <Price>{parseInt(item.price).toLocaleString()}원</Price>
                   <Rate>{item.updown_percent}%</Rate>
                 </TextWrapper>
               </ContentBox>

@@ -23,9 +23,10 @@ const Title = styled.h2`
 const IncreaseWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin-top: 24px; 
+  width: 100%;
 `;
 
 const IncreaseImg = styled.img`
@@ -38,7 +39,7 @@ const IncreaseTextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 23px;
-  font-size: min(3.9vw, 16px);
+  font-size: min(3.8vw, 16px);
 `;
 
 const IncreaseName = styled.p`
@@ -61,9 +62,11 @@ const IncreaseRate = styled.p`
 const DecreaseWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  margin-top: 24px; 
+  margin-top: 24px;
+  margin-right: 20px;
+  width: 100%;
 `;
 
 const DecreaseImg = styled.img`
@@ -75,13 +78,14 @@ const DecreaseTextWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 23px; 
-  font-size: min(3.9vw, 16px);
+  margin-left: 25px; 
+  font-size: min(3.8vw, 16px);
 `;
 
 const DecreaseName = styled.p`
   font-weight: 500;
   color: #3d3d3d;
+  //letter-spacing:10px;
 `;
 
 const DecreasePrice = styled.p`
@@ -133,7 +137,7 @@ export default function TodayPrice() {
           <IncreaseImg src="/assets/icons/increase.png"></IncreaseImg>
           <IncreaseTextWrapper>
             <IncreaseName>{highestPriceItem.ingredient_name}</IncreaseName>
-            <IncreasePrice>{highestPriceItem.price}원</IncreasePrice>
+            <IncreasePrice>{parseInt(highestPriceItem.price).toLocaleString()}원</IncreasePrice>
             <IncreaseRate>{highestPriceItem.updown_percent}%</IncreaseRate>
           </IncreaseTextWrapper>
         </IncreaseWrapper>
@@ -144,7 +148,7 @@ export default function TodayPrice() {
           <DecreaseImg src="/assets/icons/decrease.png"></DecreaseImg>
           <DecreaseTextWrapper>
             <DecreaseName>{lowestPriceItem.ingredient_name}</DecreaseName>
-            <DecreasePrice>{lowestPriceItem.price}원</DecreasePrice>
+            <DecreasePrice>{parseInt(lowestPriceItem.price).toLocaleString()}원</DecreasePrice>
             <DecreaseRate>{lowestPriceItem.updown_percent}%</DecreaseRate>
           </DecreaseTextWrapper>
         </DecreaseWrapper>
