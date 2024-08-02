@@ -70,15 +70,16 @@ export default function RelatedIngredients({ IngredientId, dayPrice }) {
   return (
     <WhiteWrapContainer width='92.5%' height='445px'>
       <TitleTextContainer>관련 레시피</TitleTextContainer>
-      <HorizontalScrollContainer height='26px'>
+      <HorizontalScrollContainer height='34px'>
         {recipes &&
           recipes.map((recipe, idx) => (
             <StandardButton
               width='100px'
-              height='24px'
+              height='28px'
               key={idx}
               accent={selectedRecipeId === recipe.name}
               marginRight='5px'
+              fontSize='30px'
               onClick={() => handleButtonClick(recipe.name)}
             >
               {truncateName(recipe.name)}
