@@ -42,12 +42,8 @@ const ArrowIcon = styled.img`
   transition: transform 0.3s ease;
 `;
 
-export default function RecipeIngredients() {
+export default function RecipeIngredients({ ingredient_list }) {
   const [expanded, setExpanded] = useState(false);
-  // 식재료 데이터 받아오기
-  const ingredients = [
-    '취나물밥 밥 210g(1공기), 다진 쇠고기 20g(1⅓큰술), 취나물 20g(8줄기), 다진 양파 5g(1작은술), 다진마늘 5g(1작은술), 간장 약간, 매실즙 3g(2/3작은술), 참기름 2g(1/3작은술), 참깨 5g(1작은술), 소금 약간 청국장쌈장 청국장 20g(1⅓큰술), 된장 2g(1/3작은술), 콩가루 5g(1작은술), 멸치가루 2g(1/3작은술), 쌀뜨물 30g(2큰술), 다진 양파 7g(1/2큰술), 다진 호박 7g(1/2큰술), 다진 당근 7g(1/2큰술), 다진 표고버섯 7g(1/2큰술), 다진 호두 5g(1작은술), 참기름 2g(1/3작은술)'
-  ];
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -70,7 +66,7 @@ export default function RecipeIngredients() {
         </TitleContainer>
       }>
       <IngredientsList expanded={expanded}>
-        {ingredients}
+        {ingredient_list}
       </IngredientsList>
     </RecipeWhiteContainer>
   );
