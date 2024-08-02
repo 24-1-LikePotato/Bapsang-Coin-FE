@@ -28,7 +28,7 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentBox = styled.div`
-  width: 75px;
+  width: 80px;
   height: 85px;
   border-radius: 15px;
   background-color: #fff9f2;
@@ -63,21 +63,10 @@ const Rate = styled.p`
 export default function Recommend() {
   const navigate = useNavigate();
 
-  //추천 식재료 임의 데이터 설정
-  /*const [recommendItems, setRecommendItems] = useState([
-    { id: "id1", name: "", price: "", rate: "" },
-    { id: "id2", name: "", price: "", rate: "" },
-    { id: "id3", name: "", price: "", rate: "" },
-    { id: "id4", name: "", price: "", rate: "" },
-    { id: "id5", name: "", price: "", rate: "" },
-  ]);*/
-
-  const [recommendItems, setRecommendItems] = useState([
-   
-  ]);
+  const [recommendItems, setRecommendItems] = useState([]);
   useEffect(() => {
     axios
-      .get('https://zipbab-coin.p-e.kr/price/recommend-price')
+      .get("https://zipbab-coin.p-e.kr/price/recommend-price")
       .then((res) => {
         setRecommendItems(res.data);
         console.log(res.data);
