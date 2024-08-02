@@ -5,6 +5,7 @@ import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import ImageContainer from "../container/ImageContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
 import axios from "axios";
+import "../fonts/OpenSans.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const ContentWrapper = styled.div`
   gap: 15px;
   margin-top: 20px;
   overflow-y: hidden; /* 세로 스크롤 방지 */
-  overflow-x: auto; 
+  overflow-x: auto;
   position: relative; /* 컨테이너 위치 고정 */
   width: 100%;
 
@@ -59,6 +60,8 @@ const Image = styled.img`
 const Text = styled.p`
   margin-left: 23px;
   margin-right: 23px;
+  font-family: "OpenSans";
+  font-weight: 400;
   font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,12 +83,10 @@ export default function TodayFood() {
     { id: "id5", image: "", text: "" },
   ]);*/
 
-  const [foodItems, setFoodItems] = useState([
-    
-  ]);
+  const [foodItems, setFoodItems] = useState([]);
   useEffect(() => {
     axios
-      .get('https://zipbab-coin.p-e.kr/main/today-recipe')
+      .get("https://zipbab-coin.p-e.kr/main/today-recipe")
       .then((res) => {
         setFoodItems(res.data);
         console.log(res.data);
@@ -112,10 +113,7 @@ export default function TodayFood() {
                   </ImageContainer>
                 </WrapImageContainer>
 
-                <Text>
-                  
-                  {item.name}
-                </Text>
+                <Text>{item.name}</Text>
               </ContentBox>
             ))}
           </ContentWrapper>

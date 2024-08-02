@@ -41,14 +41,14 @@ const TextWrapper = styled.div`
 `;
 
 const Name = styled.p`
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: #3d3d3d;
 `;
 
 const Price = styled.p`
-  font-size: 16px;
+  font-size: 15px;
   margin-top: 4px;
   font-weight: 600;
   color: #3d3d3d;
