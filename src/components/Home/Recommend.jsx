@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,13 +64,28 @@ export default function Recommend() {
   const navigate = useNavigate();
 
   //추천 식재료 임의 데이터 설정
-  const [recommendItems, setRecommendItems] = useState([
+  /*const [recommendItems, setRecommendItems] = useState([
     { id: "id1", name: "", price: "", rate: "" },
     { id: "id2", name: "", price: "", rate: "" },
     { id: "id3", name: "", price: "", rate: "" },
     { id: "id4", name: "", price: "", rate: "" },
     { id: "id5", name: "", price: "", rate: "" },
+  ]);*/
+
+  const [recommendItems, setRecommendItems] = useState([
+   
   ]);
+  useEffect(() => {
+    axios
+      .get('https://zipbab-coin.p-e.kr/price/recommend-price')
+      .then((res) => {
+        setRecommendItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleBoxClick = (id) => {
     navigate(`/home/Ingredients/${id}`);
@@ -83,9 +99,9 @@ export default function Recommend() {
             {recommendItems.map((item) => (
               <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
                 <TextWrapper>
-                  <Name>감자{item.name}</Name>
-                  <Price>1,234{item.price}원</Price>
-                  <Rate>-1.1{item.rate}%</Rate>
+                  <Name>{item.ingredient_name}</Name>
+                  <Price>{item.price}원</Price>
+                  <Rate>{item.updown_percent}%</Rate>
                 </TextWrapper>
               </ContentBox>
             ))}

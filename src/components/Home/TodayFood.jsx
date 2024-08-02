@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import ImageContainer from "../container/ImageContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,13 +72,28 @@ const Text = styled.p`
 export default function TodayFood() {
   const navigate = useNavigate();
   //오늘의 집밥 임의 데이터 설정
-  const [foodItems, setFoodItems] = useState([
+  /*const [foodItems, setFoodItems] = useState([
     { id: "id1", image: "", text: "" },
     { id: "id2", image: "", text: "" },
     { id: "id3", image: "", text: "" },
     { id: "id4", image: "", text: "" },
     { id: "id5", image: "", text: "" },
+  ]);*/
+
+  const [foodItems, setFoodItems] = useState([
+    
   ]);
+  useEffect(() => {
+    axios
+      .get('https://zipbab-coin.p-e.kr/main/today-recipe')
+      .then((res) => {
+        setFoodItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleBoxClick = (id) => {
     navigate(`/home/recipe/${id}/${id}`);
@@ -97,8 +113,8 @@ export default function TodayFood() {
                 </WrapImageContainer>
 
                 <Text>
-                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드
-                  {item.text}
+                  
+                  {item.name}
                 </Text>
               </ContentBox>
             ))}

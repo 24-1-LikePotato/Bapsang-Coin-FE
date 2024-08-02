@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,23 +21,24 @@ const Title = styled.h2`
 `;
 
 const IncreaseWrapper = styled.div`
-  //최고 가격
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 24px; 
 `;
+
 const IncreaseImg = styled.img`
-  margin-top: 24px;
+  margin-top: 0; 
 `;
+
 const IncreaseTextWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
   margin-left: 23px;
-  font-size: min(3.9vw, 16px); //폰트 단위 수정
+  font-size: min(3.9vw, 16px);
 `;
 
 const IncreaseName = styled.p`
@@ -57,15 +59,15 @@ const IncreaseRate = styled.p`
 `;
 
 const DecreaseWrapper = styled.div`
-  //최저 가격
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 24px; 
 `;
 
 const DecreaseImg = styled.img`
-  margin-top: 23px;
+  margin-top: 0; 
 `;
 
 const DecreaseTextWrapper = styled.div`
@@ -73,8 +75,7 @@ const DecreaseTextWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 18px;
-  margin-left: 23px;
+  margin-left: 23px; 
   font-size: min(3.9vw, 16px);
 `;
 
@@ -103,17 +104,26 @@ const Bar = styled.div`
 `;
 
 export default function TodayPrice() {
-  //최고,최저 각각 임의 데이터 설정
-  const [highestPriceItem, setHighestPriceItem] = useState({
-    name: "감자",
-    price: "1,234",
-    rate: "+0.3",
-  });
-  const [lowestPriceItem, setLowestPriceItem] = useState({
-    name: "오이",
-    price: "2,334",
-    rate: "-1.1",
-  });
+  const [highestPriceItem, setHighestPriceItem] = useState({});
+  const [lowestPriceItem, setLowestPriceItem] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`https://zipbab-coin.p-e.kr/price/today-price`)
+      .then((res) => {
+        console.log('API Response:', res.data);
+        
+        if (res.data.highest_price_item && res.data.lowest_price_item) {
+          setHighestPriceItem(res.data.highest_price_item);
+          setLowestPriceItem(res.data.lowest_price_item);
+        } else {
+          console.error('API response structure is not as expected');
+        }
+      })
+      .catch((err) => {
+        console.error('API Error:', err);
+      });
+  }, []);
 
   return (
     <Wrapper>
@@ -122,9 +132,9 @@ export default function TodayPrice() {
         <IncreaseWrapper>
           <IncreaseImg src="/assets/icons/increase.png"></IncreaseImg>
           <IncreaseTextWrapper>
-            <IncreaseName>{highestPriceItem.name}</IncreaseName>
-            <IncreasePrice>{highestPriceItem.price} 원</IncreasePrice>
-            <IncreaseRate>{highestPriceItem.rate}%</IncreaseRate>
+            <IncreaseName>{highestPriceItem.ingredient_name}</IncreaseName>
+            <IncreasePrice>{highestPriceItem.price}원</IncreasePrice>
+            <IncreaseRate>{highestPriceItem.updown_percent}%</IncreaseRate>
           </IncreaseTextWrapper>
         </IncreaseWrapper>
 
@@ -133,9 +143,9 @@ export default function TodayPrice() {
         <DecreaseWrapper>
           <DecreaseImg src="/assets/icons/decrease.png"></DecreaseImg>
           <DecreaseTextWrapper>
-            <DecreaseName>{lowestPriceItem.name}</DecreaseName>
-            <DecreasePrice>{lowestPriceItem.price} 원</DecreasePrice>
-            <DecreaseRate>{lowestPriceItem.rate}%</DecreaseRate>
+            <DecreaseName>{lowestPriceItem.ingredient_name}</DecreaseName>
+            <DecreasePrice>{lowestPriceItem.price}원</DecreasePrice>
+            <DecreaseRate>{lowestPriceItem.updown_percent}%</DecreaseRate>
           </DecreaseTextWrapper>
         </DecreaseWrapper>
       </WhiteWrapContainer>
