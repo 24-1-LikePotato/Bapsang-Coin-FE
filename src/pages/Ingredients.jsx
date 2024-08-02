@@ -17,10 +17,9 @@ export default function Ingredients() {
   const [isError, setIsError] = useState(false);
   useEffect(() => {
     if (IngredientId) {
-      console.log('search');
       //검색어를 입력했을 시
       axios
-        .get(`https://zipbab-coin.p-e.kr/main/search/?ingredient=${IngredientId}`)
+        .get(`https://zipbab-coin.p-e.kr/main/search?ingredient=${IngredientId}`)
         .then((res) => {
           setIsError(false);
           setDayPrice(res.data.dayprice);
@@ -32,10 +31,9 @@ export default function Ingredients() {
         }); //검색어가 존재하지 않을 때
       //검색어가 존재할 때
     } else {
-      console.log('Default');
-      //검색어를 입력하지 않고 nav바 클릭으로 넘어왔을 시 (추후 변경 예정)
+      //검색어를 입력하지 않고 nav바 클릭으로 넘어왔을 시
       axios
-        .get(`https://zipbab-coin.p-e.kr/main/search/?ingredient=감자`)
+        .get(`https://zipbab-coin.p-e.kr/main/ingredient`)
         .then((res) => {
           setIsError(false);
           setDayPrice(res.data.dayprice);
