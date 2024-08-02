@@ -6,7 +6,8 @@ import StyledIcon from '../Button/StyledIcon';
 const WrapGraphDataEmpty = styled.div`
   display: flex;
   align-items: center;
-  margin: auto 0;
+  margin: ${({ $margin }) => $margin || 'auto 0'};
+  max-height: 500px;
   font-weight: bold;
   color: #ffaa2f;
 `;
@@ -14,11 +15,11 @@ const GraphDataEmptyText = styled.div`
   margin-left: 5px;
 `;
 
-export default function GraphDataEmpty() {
+export default function DataErrorMessageContainer({ children, margin }) {
   return (
-    <WrapGraphDataEmpty>
+    <WrapGraphDataEmpty $margin={margin}>
       <StyledIcon as={AiOutlineExclamationCircle} width='24px' height='24px' />
-      <GraphDataEmptyText> 데이터가 존재하지 않습니다</GraphDataEmptyText>
+      <GraphDataEmptyText>{children}</GraphDataEmptyText>
     </WrapGraphDataEmpty>
   );
 }

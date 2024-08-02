@@ -9,64 +9,89 @@ import StyledIcon from '../Button/StyledIcon';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import TitleTextContainer from '../container/TitleTextContainer';
+import axios from 'axios';
 
-// 추후 IngredientId 로 식재료에 있는 recipes 가져오기
-export default function RelatedIngredients({ IngredientId }) {
+export default function RelatedIngredients({ IngredientId, dayPrice }) {
   const navigate = useNavigate();
-  const [recipes, setRecipes] = useState([
-    // 임시 데이터
-    { id: '1', title: 'title1', img: 'image1' },
-    { id: '2', title: 'title2', img: 'image2' },
-    { id: '3', title: 'title3', img: 'image3' },
-    { id: '4', title: 'title4', img: 'image4' },
-    { id: '5', title: 'title5', img: 'image5' },
-  ]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+  const [recipes, setRecipes] = useState(null);
 
   useEffect(() => {
-    if (recipes.length > 0) {
-      setSelectedRecipeId(recipes[0].id);
+    if (IngredientId) {
+      axios
+        .get(`https://zipbab-coin.p-e.kr/main/recipe/search?ingredient=${IngredientId}`)
+        .then((res) => {
+          setRecipes(res.data);
+          if (res.data.length > 0) {
+            setSelectedRecipeId(res.data[0].name);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .get(`https://zipbab-coin.p-e.kr/main/related-recipe`)
+        .then((res) => {
+          setRecipes(res.data);
+          if (res.data.length > 0) {
+            setSelectedRecipeId(res.data[0].name);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [recipes]);
+  }, [IngredientId]);
 
-  const handleButtonClick = (id) => {
-    setSelectedRecipeId(id);
+  const handleButtonClick = (name) => {
+    setSelectedRecipeId(name);
   };
 
-  // 선택된 레시피의 img 값을 가져오는 함수
   const getSelectedRecipeImage = () => {
-    const selectedRecipe = recipes.find((recipe) => recipe.id === selectedRecipeId);
-    return selectedRecipe ? selectedRecipe.img : null;
+    if (!recipes) return null;
+    const selectedRecipe = recipes.find((recipe) => recipe.name === selectedRecipeId);
+    return selectedRecipe ? selectedRecipe.image : null;
   };
 
-  // DetailButton 클릭 시 네비게이트하는 함수
   const handleDetailButtonClick = () => {
     if (selectedRecipeId) {
-      navigate(`/home/recipe/${IngredientId}/${selectedRecipeId}`);
+      navigate(`/home/recipe/${dayPrice.ingredient.name}/${selectedRecipeId}`);
     }
+  };
+
+  const truncateName = (name) => {
+    if (name.length > 6) {
+      return name.slice(0, 6) + '...';
+    }
+    return name;
   };
 
   return (
     <WhiteWrapContainer width='92.5%' height='445px'>
       <TitleTextContainer>관련 레시피</TitleTextContainer>
       <HorizontalScrollContainer height='26px'>
-        {recipes.map((recipe) => (
-          <StandardButton
-            width='92px'
-            height='24px'
-            key={recipe.id}
-            accent={selectedRecipeId === recipe.id}
-            marginRight='5px'
-            onClick={() => handleButtonClick(recipe.id)}
-          >
-            {recipe.title}
-          </StandardButton>
-        ))}
+        {recipes &&
+          recipes.map((recipe, idx) => (
+            <StandardButton
+              width='100px'
+              height='24px'
+              key={idx}
+              accent={selectedRecipeId === recipe.name}
+              marginRight='5px'
+              onClick={() => handleButtonClick(recipe.name)}
+            >
+              {truncateName(recipe.name)}
+            </StandardButton>
+          ))}
       </HorizontalScrollContainer>
       <WrapImageContainer>
-        <ImageContainer width='242px' height='242px' onClick={handleDetailButtonClick}>
-          {selectedRecipeId && getSelectedRecipeImage()} {/* 추후 ImageContainer의 src로 들어갈 예정 */}
-        </ImageContainer>
+        <ImageContainer
+          width='242px'
+          height='242px'
+          onClick={handleDetailButtonClick}
+          imgSrc={getSelectedRecipeImage() || ''}
+        ></ImageContainer>
       </WrapImageContainer>
       <DetailButton onClick={handleDetailButtonClick}>
         이 레시피 자세히 보기
