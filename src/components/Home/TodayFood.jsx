@@ -41,14 +41,9 @@ const ContentBox = styled.div`
   width: 240px;
   height: auto;
   border-radius: 35px;
-  background-color: #FFF;
+  background-color: #fff;
   cursor: pointer;
   flex-shrink: 0; /* 요소가 줄어들지 않도록 설정 */
-
-  &:hover {
-    //transform: translateY(-10px);
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-  }
 `;
 const WrapImageContainer = styled.div`
   display: flex;
