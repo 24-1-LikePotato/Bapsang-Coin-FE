@@ -64,7 +64,7 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
     <WhiteWrapContainer width='92.5%' height='383px'>
       {dayPrice && dayPrice.ingredient && dayPrice.price !== undefined && dayPrice.updown_percent !== undefined ? (
         <>
-          <TitleTextContainer>{dayPrice.ingredient.name}</TitleTextContainer>
+          <TitleTextContainer perUnit={dayPrice.ingredient.unit}>{dayPrice.ingredient.name}</TitleTextContainer>
           <WrapIngredientPrice>
             <IngredientPriceText>
               <strong>오늘 가격</strong>
@@ -72,7 +72,9 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
             </IngredientPriceText>
             <IngredientPriceText>
               <strong>등락율</strong>
-              <PriceFluctionRate $rate={dayPrice.updown_percent}>{dayPrice.updown_percent}%</PriceFluctionRate>
+              <PriceFluctionRate $rate={dayPrice.updown}>
+                {`${dayPrice.updown ? `-` : `+`}` + dayPrice.updown_percent}%
+              </PriceFluctionRate>
             </IngredientPriceText>
           </WrapIngredientPrice>
         </>
@@ -80,7 +82,7 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
         <DataErrorMessageContainer>데이터가 존재하지 않습니다</DataErrorMessageContainer>
       )}
       {isGraphDataEmpty ? (
-        <DataErrorMessageContainer>데이터가 존재하지 않습니다</DataErrorMessageContainer>
+        <DataErrorMessageContainer>데이터가 존재하지 않습니다{console.log(priceChanges)}</DataErrorMessageContainer>
       ) : (
         <GraphContainer data={[priceChanges]} />
       )}
@@ -97,7 +99,7 @@ const WrapIngredientPrice = styled.div`
 
 const IngredientPriceText = styled.div`
   margin: 8px 12px;
-  font-size: min(4vw, 16px);
+  font-size: min(4vw, 15px);
   strong {
     margin-right: 12px;
   }
@@ -105,5 +107,5 @@ const IngredientPriceText = styled.div`
 
 const PriceFluctionRate = styled.span`
   font-weight: bold;
-  color: ${({ $rate }) => (parseFloat($rate) > 0 ? 'red' : 'blue')};
+  color: ${({ $rate }) => (parseFloat($rate) === 0 ? 'red' : 'blue')};
 `;

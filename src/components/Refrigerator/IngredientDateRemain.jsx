@@ -4,7 +4,15 @@ import styled from 'styled-components';
 import { RxCross2 } from 'react-icons/rx';
 import RefrigeratorModalOverlay from './RefrigeratorModalOverlay';
 
-export default function IngredientDateRemain({ ingredientName, ingredientRemain, id, isSelected, onDelete, onSelect }) {
+export default function IngredientDateRemain({
+  ingredientName,
+  ingredientRemain,
+  id,
+  isSelected,
+  onDelete,
+  onSelect,
+  expiringSoon,
+}) {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleDeleteClick = (e) => {
@@ -15,7 +23,7 @@ export default function IngredientDateRemain({ ingredientName, ingredientRemain,
   return (
     <WrapIngredientDateRemain className='ingredient-item' onClick={() => onSelect(id)}>
       <StyledWhiteWrapContainer width='74px' height='90px'>
-        <IngredientDateRemainText>
+        <IngredientDateRemainText $expiringSoon={expiringSoon}>
           <DeleteButton $isSelected={isSelected} onClick={handleDeleteClick}>
             <RxCross2 />
           </DeleteButton>
@@ -48,6 +56,7 @@ const IngredientDateRemainText = styled.div`
   font-size: 12px;
   width: 100%;
   height: 100%;
+  color: ${({ $expiringSoon }) => ($expiringSoon ? '#ff9500' : '#000000')};
 
   strong {
     margin-top: 8px;

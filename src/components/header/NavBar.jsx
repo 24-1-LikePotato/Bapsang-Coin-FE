@@ -13,8 +13,9 @@ const WrapNavBar = styled.div`
   align-items: center;
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
+  margin: auto;
+  max-width: 375px;
   height: 4.5rem;
   background-color: #ffffff;
   border-top: 1px solid #e3e3e3;
