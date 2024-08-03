@@ -119,4 +119,5 @@ export default function RelatedIngredients({ IngredientId, dayPrice }) {
 const WrapImageContainer = styled.div`
   margin-top: 32px;
   margin-bottom: 16px;
+  cursor: pointer;
 `;
