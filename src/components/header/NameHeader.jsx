@@ -6,15 +6,30 @@ import StyledIcon from '../Button/StyledIcon';
 import GongGothicFontStyle from '../fonts/GongGothicFontStyle';
 import { SlArrowLeft } from 'react-icons/sl';
 
-const Header = styled.header`
+const HeaderWrapper = styled.div`
+  position: ${props => props.isRecipePage ? 'absolute' : 'relative'};
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
+
+const HeaderBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${props => props.isRecipePage ? 'rgba(255, 247, 236, 0.5)' : '#fff7ec'};
+`;
+
+const HeaderContent = styled.header`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px;
   height: 32px;
-  background-color: #fff7ec;
-  color: #3d3d3d;
-  position: relative;
 `;
 
 const IconWrapper = styled.div`
@@ -24,6 +39,7 @@ const IconWrapper = styled.div`
 const Title = styled.h1`
   font-size: 19px;
   font-family: 'GongGothic', sans-serif;
+  color: #3d3d3d;
 `;
 
 const LeftButton = styled.div`
@@ -34,6 +50,7 @@ const LeftButton = styled.div`
   align-items: center;
   font-size: 12px;
   cursor: pointer;
+  color: #3d3d3d;
 `;
 
 export default function NameHeader() {
@@ -43,6 +60,7 @@ export default function NameHeader() {
 
   let headerTitle;
   let headerIcon = null;
+  let isRecipePage = false;
 
   switch (true) {
     case /^\/home$/i.test(pathname):
@@ -63,22 +81,26 @@ export default function NameHeader() {
       break;
     case /^\/home\/recipe\/[^/]+\/[^/]+$/i.test(pathname):
       headerTitle = '레시피';
+      isRecipePage = true;
       break;
     default:
       headerTitle = '집밥코인';
   }
 
   return (
-    <Header>
-      <GongGothicFontStyle />
-      {headerTitle === '집밥코인' ? null : (
-        <LeftButton onClick={() => navigate(-1)}>
-          <StyledIcon as={SlArrowLeft} width='21px' height='20px' />
-          뒤로가기
-        </LeftButton>
-      )}
-      {headerIcon && <IconWrapper>{headerIcon}</IconWrapper>}
-      <Title>{headerTitle}</Title>
-    </Header>
+    <HeaderWrapper isRecipePage={isRecipePage}>
+      <HeaderBackground isRecipePage={isRecipePage} />
+      <HeaderContent>
+        <GongGothicFontStyle />
+        {headerTitle === '집밥코인' ? null : (
+          <LeftButton onClick={() => navigate(-1)}>
+            <StyledIcon as={SlArrowLeft} width='21px' height='20px' />
+            뒤로가기
+          </LeftButton>
+        )}
+        {headerIcon && <IconWrapper>{headerIcon}</IconWrapper>}
+        <Title>{headerTitle}</Title>
+      </HeaderContent>
+    </HeaderWrapper>
   );
 }
