@@ -11,14 +11,14 @@ const ButtonStyle = styled.div`
   font-family: 'OpenSans';
   font-weight: 700;
   color: ${({ color }) => color || '#F5F4F1'};
-  background-color: ${({ buttoncolor }) => buttoncolor || '#FFAA2F'};
+  background-color: ${({ $buttoncolor }) => $buttoncolor || '#FFAA2F'};
   border: 0.094rem solid ${({ color }) => color || '#F5F4F1'};
   cursor: pointer;
 `;
 
 export default function StyledButton({ width, height, text, color, buttoncolor, onClick }) {
   return (
-    <ButtonStyle width={width} height={height} color={color} buttoncolor={buttoncolor} onClick={onClick}>
+    <ButtonStyle width={width} height={height} color={color} $buttoncolor={buttoncolor} onClick={onClick}>
       {text}
     </ButtonStyle>
   );
