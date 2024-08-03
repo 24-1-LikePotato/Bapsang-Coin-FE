@@ -7,11 +7,10 @@ import GongGothicFontStyle from '../fonts/GongGothicFontStyle';
 import { SlArrowLeft } from 'react-icons/sl';
 
 const HeaderWrapper = styled.div`
-  position: ${props => props.isRecipePage ? 'absolute' : 'relative'};
+  position: ${props => props.$isRecipePage ? 'absolute' : 'relative'};
   width: 100%;
+  max-width: 430px;
   top: 0;
-  left: 0;
-  right: 0;
 `;
 
 const HeaderBackground = styled.div`
@@ -20,7 +19,7 @@ const HeaderBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${props => props.isRecipePage ? 'rgba(255, 247, 236, 0.5)' : '#fff7ec'};
+  background-color: ${props => props.$isRecipePage ? 'rgba(255, 247, 236, 0.5)' : '#fff7ec'};
 `;
 
 const HeaderContent = styled.header`
@@ -88,8 +87,8 @@ export default function NameHeader() {
   }
 
   return (
-    <HeaderWrapper isRecipePage={isRecipePage}>
-      <HeaderBackground isRecipePage={isRecipePage} />
+    <HeaderWrapper $isRecipePage={isRecipePage}>
+      <HeaderBackground $isRecipePage={isRecipePage} />
       <HeaderContent>
         <GongGothicFontStyle />
         {headerTitle === '집밥코인' ? null : (
