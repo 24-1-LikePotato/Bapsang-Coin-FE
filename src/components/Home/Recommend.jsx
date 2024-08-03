@@ -33,6 +33,7 @@ const ContentBox = styled.div`
   border-radius: 15px;
   background-color: #fff9f2;
   cursor: pointer;
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 설정 */
 `;
 
 const TextWrapper = styled.div`

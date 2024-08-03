@@ -51,11 +51,11 @@ const WrapImageContainer = styled.div`
   margin: 32px 0;
 `;
 
-const Image = styled.img`
+/*const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-`;
+`;*/
 
 const Text = styled.p`
   margin-left: 23px;
@@ -74,14 +74,6 @@ const Text = styled.p`
 
 export default function TodayFood() {
   const navigate = useNavigate();
-  //오늘의 집밥 임의 데이터 설정
-  /*const [foodItems, setFoodItems] = useState([
-    { id: "id1", image: "", text: "" },
-    { id: "id2", image: "", text: "" },
-    { id: "id3", image: "", text: "" },
-    { id: "id4", image: "", text: "" },
-    { id: "id5", image: "", text: "" },
-  ]);*/
 
   const [foodItems, setFoodItems] = useState([]);
   useEffect(() => {
@@ -96,8 +88,8 @@ export default function TodayFood() {
       });
   }, []);
 
-  const handleBoxClick = (id) => {
-    navigate(`/home/recipe/${id}/${id}`);
+  const handleBoxClick = (name) => {
+    navigate(`/home/recipe/${name}/${name}`);
   };
   return (
     <Wrapper>
@@ -106,11 +98,16 @@ export default function TodayFood() {
         <HorizontalScrollContainer height="357px">
           <ContentWrapper>
             {foodItems.map((item) => (
-              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+              <ContentBox
+                key={item.name}
+                onClick={() => handleBoxClick(item.name)}
+              >
                 <WrapImageContainer>
-                  <ImageContainer width="200px" height="200px">
-                    <Image src={item.image} alt={item.text} />
-                  </ImageContainer>
+                  <ImageContainer
+                    width="200px"
+                    height="200px"
+                    imgSrc={item.image}
+                  ></ImageContainer>
                 </WrapImageContainer>
 
                 <Text>{item.name}</Text>
