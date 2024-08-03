@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
 import axios from "axios";
+import "../fonts/OpenSans.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const ContentWrapper = styled.div`
 
 const ContentBox = styled.div`
   width: 100px;
-  height: 85px;
+  height: 95px;
   border-radius: 15px;
   background-color: #fff9f2;
   cursor: pointer;
@@ -37,12 +38,18 @@ const ContentBox = styled.div`
 `;
 
 const TextWrapper = styled.div`
-  margin: 6px 12px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  //align-items: center;
+  font-family: "OpenSans";
+  font-weight: 400;
 `;
 
 const Name = styled.span`
-  font-size: 11px;
-  margin-top: 13px;
+  font-size: 0.8rem;
+  //margin-top: 13px;
   font-weight: 500;
   color: #3d3d3d;
   white-space: nowrap;
@@ -51,20 +58,20 @@ const Name = styled.span`
 `;
 
 const Price = styled.p`
-  font-size: 15px;
+  font-size: 1rem;
   margin-top: 4px;
   font-weight: 600;
   color: #3d3d3d;
 `;
 
 const Rate = styled.p`
-  font-size: 12px;
+  font-size: 0.8rem;
   margin-top: 3px;
   color: #0066ff;
 `;
 
 const Unit = styled.span`
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   margin-left: 4px;
 `;
 
@@ -77,7 +84,7 @@ export default function Recommend() {
       .get("https://zipbab-coin.p-e.kr/price/recommend-price")
       .then((res) => {
         setRecommendItems(res.data);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
