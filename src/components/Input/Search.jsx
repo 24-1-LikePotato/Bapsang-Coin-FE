@@ -9,7 +9,7 @@ const SearchForm = styled.form`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 36px;
+  padding-top: 10px;
 `;
 
 const SearchContainer = styled.div`
