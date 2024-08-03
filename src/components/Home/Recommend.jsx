@@ -28,7 +28,7 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentBox = styled.div`
-  width: 80px;
+  width: 100px;
   height: 85px;
   border-radius: 15px;
   background-color: #fff9f2;
@@ -37,15 +37,17 @@ const ContentBox = styled.div`
 `;
 
 const TextWrapper = styled.div`
-  margin-left: 11px;
-  margin-right: 11px;
+  margin: 6px 12px;
 `;
 
-const Name = styled.p`
+const Name = styled.span`
   font-size: 11px;
   margin-top: 13px;
   font-weight: 500;
   color: #3d3d3d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Price = styled.p`
@@ -59,6 +61,11 @@ const Rate = styled.p`
   font-size: 12px;
   margin-top: 3px;
   color: #0066ff;
+`;
+
+const Unit = styled.span`
+  font-size: 0.5rem;
+  margin-left: 4px;
 `;
 
 export default function Recommend() {
@@ -92,7 +99,10 @@ export default function Recommend() {
                 onClick={() => handleBoxClick(item.ingredient_name)}
               >
                 <TextWrapper>
-                  <Name>{item.ingredient_name}</Name>
+                  <Name>
+                    {item.ingredient_name}
+                    <Unit>{item.unit}</Unit>
+                  </Name>
                   <Price>{parseInt(item.price).toLocaleString()}원</Price>
                   <Rate>{item.updown_percent}%</Rate>
                 </TextWrapper>
