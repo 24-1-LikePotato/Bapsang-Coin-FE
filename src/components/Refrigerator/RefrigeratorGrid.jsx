@@ -16,19 +16,19 @@ const chunkArray = (array, size) => {
 export default function RefrigeratorGrid() {
   const [ingredients, setIngredients] = useState([
     // 임시 데이터
-    { id: '1', name: '양파', remainDate: '2' },
-    { id: '2', name: '감자', remainDate: '3' },
-    { id: '3', name: '고구마', remainDate: '4' },
-    { id: '4', name: 'title4', remainDate: '5' },
-    { id: '5', name: 'title5', remainDate: '6' },
-    { id: '6', name: 'title6', remainDate: '7' },
-    { id: '7', name: 'title7', remainDate: '8' },
-    { id: '8', name: 'title8', remainDate: '9' },
-    { id: '9', name: 'title9', remainDate: '10' },
-    { id: '10', name: 'title10', remainDate: '11' },
-    { id: '11', name: 'title11', remainDate: '12' },
-    { id: '12', name: 'title12', remainDate: '13' },
-    { id: '13', name: 'title13', remainDate: '14' },
+    { id: '1', ingredient_name: '양파', days_until_expiration: '2', is_expiring_soon: false },
+    { id: '2', ingredient_name: '감자', days_until_expiration: '3', is_expiring_soon: false },
+    { id: '3', ingredient_name: '고구마', days_until_expiration: '4', is_expiring_soon: false },
+    { id: '4', ingredient_name: 'title4', days_until_expiration: '5', is_expiring_soon: false },
+    { id: '5', ingredient_name: 'title5', days_until_expiration: '6', is_expiring_soon: false },
+    { id: '6', ingredient_name: 'title6', days_until_expiration: '1', is_expiring_soon: true },
+    { id: '7', ingredient_name: 'title7', days_until_expiration: '8', is_expiring_soon: false },
+    { id: '8', ingredient_name: 'title8', days_until_expiration: '9', is_expiring_soon: false },
+    { id: '9', ingredient_name: 'title9', days_until_expiration: '10', is_expiring_soon: false },
+    { id: '10', ingredient_name: 'title10', days_until_expiration: '1', is_expiring_soon: true },
+    { id: '11', ingredient_name: 'title11', days_until_expiration: '12', is_expiring_soon: false },
+    { id: '12', ingredient_name: 'title12', days_until_expiration: '13', is_expiring_soon: false },
+    { id: '13', ingredient_name: 'title13', days_until_expiration: '14', is_expiring_soon: false },
   ]);
   const [selectedId, setSelectedId] = useState(null);
   const [isDeleteConfirmed, setDeleteConfirmed] = useState(false);
@@ -75,10 +75,11 @@ export default function RefrigeratorGrid() {
                   {chunk.map((ingredient, idx) => (
                     <IngredientDateRemain
                       className='ingredient-item'
-                      ingredientName={ingredient.name}
-                      ingredientRemain={ingredient.remainDate}
+                      ingredientName={ingredient.ingredient_name}
+                      ingredientRemain={ingredient.days_until_expiration}
                       id={ingredient.id}
                       isSelected={selectedId === ingredient.id}
+                      expiringSoon={ingredient.is_expiring_soon}
                       onDelete={handleDelete}
                       onSelect={handleSelect}
                       key={ingredient.id}
