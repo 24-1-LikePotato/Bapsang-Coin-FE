@@ -67,7 +67,7 @@ export default function Recipe() {
   return (
     <WrapRecipe>
       <RecipeImage
-        imageURL={recipe.image}
+        $imageURL={recipe.image}
       />
       <Title>
         {recipe.name}
