@@ -77,8 +77,8 @@ export default function Recommend() {
       });
   }, []);
 
-  const handleBoxClick = (id) => {
-    navigate(`/home/Ingredients/${id}`);
+  const handleBoxClick = (ingredient_name) => {
+    navigate(`/home/Ingredients/${ingredient_name}`);
   };
   return (
     <Wrapper>
@@ -87,7 +87,10 @@ export default function Recommend() {
         <HorizontalScrollContainer height="120px">
           <ContentWrapper>
             {recommendItems.map((item) => (
-              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+              <ContentBox
+                key={item.ingredient_name}
+                onClick={() => handleBoxClick(item.ingredient_name)}
+              >
                 <TextWrapper>
                   <Name>{item.ingredient_name}</Name>
                   <Price>{parseInt(item.price).toLocaleString()}원</Price>
