@@ -64,7 +64,7 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
     <WhiteWrapContainer width='92.5%' height='383px'>
       {dayPrice && dayPrice.ingredient && dayPrice.price !== undefined && dayPrice.updown_percent !== undefined ? (
         <>
-          <TitleTextContainer>{dayPrice.ingredient.name}</TitleTextContainer>
+          <TitleTextContainer perUnit='1kg'>{dayPrice.ingredient.name}</TitleTextContainer>
           <WrapIngredientPrice>
             <IngredientPriceText>
               <strong>오늘 가격</strong>
