@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import ImageContainer from "../container/ImageContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
+import axios from "axios";
+import "../fonts/OpenSans.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,13 +21,14 @@ const Title = styled.h2`
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  margin-top: 10px;
 `;
 const ContentWrapper = styled.div`
   display: flex;
   gap: 15px;
   margin-top: 20px;
   overflow-y: hidden; /* 세로 스크롤 방지 */
-  overflow-x: auto; 
+  overflow-x: auto;
   position: relative; /* 컨테이너 위치 고정 */
   width: 100%;
 
@@ -36,9 +39,9 @@ const ContentWrapper = styled.div`
 
 const ContentBox = styled.div`
   width: 240px;
-  height: 338px;
-  border-radius: 20px;
-  background-color: #fff9f2;
+  height: auto;
+  border-radius: 35px;
+  background-color: #fff;
   cursor: pointer;
   flex-shrink: 0; /* 요소가 줄어들지 않도록 설정 */
 `;
@@ -46,60 +49,67 @@ const WrapImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 32px 0;
-`;
-
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
+  padding: 19px;
 `;
 
 const Text = styled.p`
+  word-break: keep-all;
   margin-left: 23px;
   margin-right: 23px;
-  font-size: 1rem;
+  margin-top: 5px;
+  text-align: center;
+  justify-content: center;
+  font-family: "OpenSans";
+  font-weight: 400;
+  font-size: 0.95rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal; /* white-space 속성을 normal로 설정 */
-  height: calc(1em * 3); /* 높이 설정 */
+  height: auto; /* 높이 설정 */
 `;
 
 export default function TodayFood() {
   const navigate = useNavigate();
-  //오늘의 집밥 임의 데이터 설정
-  const [foodItems, setFoodItems] = useState([
-    { id: "id1", image: "", text: "" },
-    { id: "id2", image: "", text: "" },
-    { id: "id3", image: "", text: "" },
-    { id: "id4", image: "", text: "" },
-    { id: "id5", image: "", text: "" },
-  ]);
 
-  const handleBoxClick = (id) => {
-    navigate(`/home/recipe/${id}/${id}`);
+  const [foodItems, setFoodItems] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://zipbab-coin.p-e.kr/main/today-recipe")
+      .then((res) => {
+        setFoodItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleBoxClick = (name) => {
+    navigate(`/home/recipe/${name}/${name}`);
   };
   return (
     <Wrapper>
-      <WhiteWrapContainer height="446px">
+      <WhiteWrapContainer height="auto">
         <Title>오늘의 집밥</Title>
-        <HorizontalScrollContainer height="357px">
+        <HorizontalScrollContainer height="auto">
           <ContentWrapper>
             {foodItems.map((item) => (
-              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+              <ContentBox
+                key={item.name}
+                onClick={() => handleBoxClick(item.name)}
+              >
                 <WrapImageContainer>
-                  <ImageContainer width="200px" height="200px">
-                    <Image src={item.image} alt={item.text} />
-                  </ImageContainer>
+                  <ImageContainer
+                    width="200px"
+                    height="200px"
+                    imgSrc={item.image}
+                  ></ImageContainer>
                 </WrapImageContainer>
 
-                <Text>
-                  유자꿀드레싱을 곁들인 곤드레 단호박 크로켓 샐러드
-                  {item.text}
-                </Text>
+                <Text>{item.name}</Text>
               </ContentBox>
             ))}
           </ContentWrapper>

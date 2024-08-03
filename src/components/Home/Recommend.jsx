@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WhiteWrapContainer from "../container/WhiteWrapContainer";
 import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,27 +28,30 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentBox = styled.div`
-  width: 75px;
+  width: 100px;
   height: 85px;
   border-radius: 15px;
   background-color: #fff9f2;
   cursor: pointer;
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 설정 */
 `;
 
 const TextWrapper = styled.div`
-  margin-left: 11px;
-  margin-right: 11px;
+  margin: 6px 12px;
 `;
 
-const Name = styled.p`
-  font-size: 10px;
+const Name = styled.span`
+  font-size: 11px;
   margin-top: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: #3d3d3d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Price = styled.p`
-  font-size: 16px;
+  font-size: 15px;
   margin-top: 4px;
   font-weight: 600;
   color: #3d3d3d;
@@ -59,20 +63,29 @@ const Rate = styled.p`
   color: #0066ff;
 `;
 
+const Unit = styled.span`
+  font-size: 0.5rem;
+  margin-left: 4px;
+`;
+
 export default function Recommend() {
   const navigate = useNavigate();
 
-  //추천 식재료 임의 데이터 설정
-  const [recommendItems, setRecommendItems] = useState([
-    { id: "id1", name: "", price: "", rate: "" },
-    { id: "id2", name: "", price: "", rate: "" },
-    { id: "id3", name: "", price: "", rate: "" },
-    { id: "id4", name: "", price: "", rate: "" },
-    { id: "id5", name: "", price: "", rate: "" },
-  ]);
+  const [recommendItems, setRecommendItems] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://zipbab-coin.p-e.kr/price/recommend-price")
+      .then((res) => {
+        setRecommendItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const handleBoxClick = (id) => {
-    navigate(`/home/Ingredients/${id}`);
+  const handleBoxClick = (ingredient_name) => {
+    navigate(`/home/Ingredients/${ingredient_name}`);
   };
   return (
     <Wrapper>
@@ -81,11 +94,17 @@ export default function Recommend() {
         <HorizontalScrollContainer height="120px">
           <ContentWrapper>
             {recommendItems.map((item) => (
-              <ContentBox key={item.id} onClick={() => handleBoxClick(item.id)}>
+              <ContentBox
+                key={item.ingredient_name}
+                onClick={() => handleBoxClick(item.ingredient_name)}
+              >
                 <TextWrapper>
-                  <Name>감자{item.name}</Name>
-                  <Price>1,234{item.price}원</Price>
-                  <Rate>-1.1{item.rate}%</Rate>
+                  <Name>
+                    {item.ingredient_name}
+                    <Unit>{item.unit}</Unit>
+                  </Name>
+                  <Price>{parseInt(item.price).toLocaleString()}원</Price>
+                  <Rate>{item.updown_percent}%</Rate>
                 </TextWrapper>
               </ContentBox>
             ))}
