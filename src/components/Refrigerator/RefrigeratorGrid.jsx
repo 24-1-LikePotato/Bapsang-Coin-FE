@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import IngredientDateRemain from './IngredientDateRemain';
 import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DataErrorMessageContainer from '../container/DataErrorMessageContainer';
+import axios from 'axios';
 
 // 배열을 쪼개는 함수
 const chunkArray = (array, size) => {
+  if (!array) return [];
   const chunked = [];
   for (let i = 0; i < array.length; i += size) {
     chunked.push(array.slice(i, i + size));
@@ -14,32 +17,52 @@ const chunkArray = (array, size) => {
 };
 
 export default function RefrigeratorGrid() {
-  const [ingredients, setIngredients] = useState([
-    // 임시 데이터
-    { id: '1', ingredient_name: '양파', days_until_expiration: '2', is_expiring_soon: false },
-    { id: '2', ingredient_name: '감자', days_until_expiration: '3', is_expiring_soon: false },
-    { id: '3', ingredient_name: '고구마', days_until_expiration: '4', is_expiring_soon: false },
-    { id: '4', ingredient_name: 'title4', days_until_expiration: '5', is_expiring_soon: false },
-    { id: '5', ingredient_name: 'title5', days_until_expiration: '6', is_expiring_soon: false },
-    { id: '6', ingredient_name: 'title6', days_until_expiration: '1', is_expiring_soon: true },
-    { id: '7', ingredient_name: 'title7', days_until_expiration: '8', is_expiring_soon: false },
-    { id: '8', ingredient_name: 'title8', days_until_expiration: '9', is_expiring_soon: false },
-    { id: '9', ingredient_name: 'title9', days_until_expiration: '10', is_expiring_soon: false },
-    { id: '10', ingredient_name: 'title10', days_until_expiration: '1', is_expiring_soon: true },
-    { id: '11', ingredient_name: 'title11', days_until_expiration: '12', is_expiring_soon: false },
-    { id: '12', ingredient_name: 'title12', days_until_expiration: '13', is_expiring_soon: false },
-    { id: '13', ingredient_name: 'title13', days_until_expiration: '14', is_expiring_soon: false },
-  ]);
+  const [ingredients, setIngredients] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [isDeleteConfirmed, setDeleteConfirmed] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
+  //냉장고 재료 불러오기
+  useEffect(() => {
+    axios
+      .get(`https://zipbab-coin.p-e.kr/main/fridge/4`)
+      .then((res) => {
+        setIngredients(res.data.ingredients);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
+
+  // 바깥 클릭시 selectedId 해제
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   // 내 냉장고 데이터 9개로 쪼개기
   const chunkedIngredients = chunkArray(ingredients, 9);
 
-  const handleDelete = (id) => {
-    setIngredients((prevIngredients) => prevIngredients.filter((ingredient) => ingredient.id !== id));
-    setSelectedId(null);
-    setDeleteConfirmed(true);
+  //삭제 함수
+  const handleDelete = async (id) => {
+    try {
+      await axios.request({
+        method: 'delete',
+        url: `https://zipbab-coin.p-e.kr/main/fridge/4`,
+        data: {
+          fridge_ingredient_id: id,
+        },
+      });
+      setIngredients((prevIngredients) => prevIngredients.filter((ingredient) => ingredient.id !== id));
+      setSelectedId(null);
+      setDeleteConfirmed(true);
+    } catch (err) {
+      console.error('삭제 실패:', err);
+    }
   };
 
   const handleSelect = (id) => {
@@ -56,39 +79,41 @@ export default function RefrigeratorGrid() {
     setDeleteConfirmed(false);
   };
 
-  // 바깥 클릭시 selectedId 해제
-  useEffect(() => {
-    document.addEventListener('click', handleOutsideClick);
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, []);
-
   return (
     <>
       <WrapGridContainer>
         <HorizontalScrollContainer width='266px' height='380px'>
-          <HorizontalWrapper>
-            {chunkedIngredients.map((chunk, chunkIdx) => (
-              <ContainerWrapper key={chunkIdx}>
-                <WrapChunk>
-                  {chunk.map((ingredient, idx) => (
-                    <IngredientDateRemain
-                      className='ingredient-item'
-                      ingredientName={ingredient.ingredient_name}
-                      ingredientRemain={ingredient.days_until_expiration}
-                      id={ingredient.id}
-                      isSelected={selectedId === ingredient.id}
-                      expiringSoon={ingredient.is_expiring_soon}
-                      onDelete={handleDelete}
-                      onSelect={handleSelect}
-                      key={ingredient.id}
-                    />
-                  ))}
-                </WrapChunk>
-              </ContainerWrapper>
-            ))}
-          </HorizontalWrapper>
+          {isLoading ? (
+            <WrapDataErrorMessage>
+              <DataErrorMessageContainer margin='150px auto'>로딩중 ...</DataErrorMessageContainer>
+            </WrapDataErrorMessage>
+          ) : ingredients && ingredients.length !== 0 ? (
+            <HorizontalWrapper>
+              {chunkedIngredients.map((chunk, chunkIdx) => (
+                <ContainerWrapper key={chunkIdx}>
+                  <WrapChunk>
+                    {chunk.map((ingredient, idx) => (
+                      <IngredientDateRemain
+                        className='ingredient-item'
+                        ingredientName={ingredient.ingredient_name}
+                        ingredientRemain={ingredient.days_until_expiration}
+                        id={ingredient.id}
+                        isSelected={selectedId === ingredient.id}
+                        expiringSoon={ingredient.is_expiring_soon}
+                        onDelete={handleDelete}
+                        onSelect={handleSelect}
+                        key={idx}
+                      />
+                    ))}
+                  </WrapChunk>
+                </ContainerWrapper>
+              ))}
+            </HorizontalWrapper>
+          ) : (
+            <WrapDataErrorMessage>
+              <DataErrorMessageContainer margin='150px auto'>등록해둔 식재료가 없습니다</DataErrorMessageContainer>
+            </WrapDataErrorMessage>
+          )}
         </HorizontalScrollContainer>
       </WrapGridContainer>
       <DeleteConfirmationModal isVisible={isDeleteConfirmed} onClose={handleCloseModal} />
@@ -113,4 +138,10 @@ const WrapChunk = styled.div`
 
 const ContainerWrapper = styled.div`
   margin-right: 22px;
+`;
+
+const WrapDataErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

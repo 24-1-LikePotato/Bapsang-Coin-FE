@@ -56,7 +56,7 @@ const IngredientDateRemainText = styled.div`
   font-size: 12px;
   width: 100%;
   height: 100%;
-  color: ${({ $expiringSoon }) => ($expiringSoon ? '#ffaa2f' : '#000000')};
+  color: ${({ $expiringSoon }) => ($expiringSoon ? '#ff9500' : '#000000')};
 
   strong {
     margin-top: 8px;
