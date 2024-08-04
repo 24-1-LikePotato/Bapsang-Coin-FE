@@ -77,7 +77,7 @@ export default function AddIngredientTwo() {
               .start();
           }}
           options={{
-            delay: 50,
+            delay: 35,
           }}
         />
       </InfoCheck>
