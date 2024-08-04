@@ -54,33 +54,47 @@ const WrapButton = styled.div`
 `
 
 export default function AddIngredientOne() {
-  const [Ingredient, setIngredient] = useState("");
-  const [Date, setDate] = useState(0);
+  const [ingredientName, setIngredientName] = useState("");
+  const [expirationDate, setExpirationDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
 
   const changeIngredient = (e) => {
-    setIngredient(e.target.value);
+    setIngredientName(e.target.value);
   }
 
-  const changeDate = (e) => {
-    setDate(e.target.value);
+  const changeExpirationDate = (e) => {
+    setExpirationDate(e.target.value);
   }
 
-  const handleIngredientInfo = ({ Ingredient, Date }) => {
-    if (Ingredient === "") {
-      alert("식재료를 입력해주세요.")
+  const calculateDaysLeft = (date) => {
+    const today = new Date();
+    const expDate = new Date(date);
+    const timeDiff = expDate.getTime() - today.getTime();
+    return Math.ceil(timeDiff / (1000 * 3600 * 24));
+  }
+
+  const handleIngredientInfo = () => {
+    if (ingredientName === "") {
+      alert("식재료를 입력해주세요.");
+      return;
     }
-    else if (Date === 0) {
-      alert("소비기한을 입력해주세요.")
+    if (expirationDate === new Date().toISOString().slice(0, 10)) {
+      alert("소비기한을 입력해주세요.");
+      return;
     }
-    else {
-      navigate("/home/addIngredient/2", {
-        state: {
-          ingredient_name: `${ Ingredient }`,
-          expiration_date: `${ Date }`,
-        },
-      });
+    if (expirationDate < new Date().toISOString().slice(0, 10)) {
+      alert("오늘보다 이전 날짜는 입력할 수 없습니다.");
+      return;
     }
+
+    const daysLeft = calculateDaysLeft(expirationDate);
+    navigate("/home/addIngredient/2", {
+      state: {
+        ingredient_name: ingredientName,
+        expiration_date: expirationDate,
+        days_left: daysLeft,
+      },
+    });
   };
 
   return (
@@ -88,21 +102,17 @@ export default function AddIngredientOne() {
       <InputRequest>
         식재료와 소비기한을<br/>입력해주세요.
       </InputRequest>
-      <InputType>
-        식재료
-      </InputType>
+      <InputType>식재료</InputType>
       <InputText
         type="text"
         placeholder="식재료를 입력해주세요."
-        onChange={ changeIngredient }
+        onChange={changeIngredient}
       />
-      <InputType>
-        소비기한
-      </InputType>
+      <InputType>소비기한</InputType>
       <InputText
-        type="number"
-        placeholder="소비기한을 입력해주세요."
-        onChange={ changeDate }
+        type="date"
+        value={expirationDate}
+        onChange={changeExpirationDate}
       />
       <WrapButton>
         <StyledButton
@@ -110,7 +120,7 @@ export default function AddIngredientOne() {
           text='등록하기'
           color='#F5F4F1'
           buttoncolor='#FFAA2F'
-          onClick={() => handleIngredientInfo({ Ingredient, Date})}
+          onClick={handleIngredientInfo}
         />
       </WrapButton>
     </WrapAddIngredient>
