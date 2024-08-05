@@ -25,7 +25,7 @@ const Title = styled.h2`
 `;
 const ContentWrapper = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 10px;
   margin-top: 20px;
   overflow-y: hidden; /* 세로 스크롤 방지 */
   overflow-x: auto;
@@ -56,19 +56,18 @@ const Text = styled.p`
   word-break: keep-all;
   margin-left: 23px;
   margin-right: 23px;
-  margin-top: 5px;
   text-align: center;
   justify-content: center;
   font-family: "OpenSans";
   font-weight: 400;
-  font-size: 0.95rem;
+  font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal; /* white-space 속성을 normal로 설정 */
-  height: auto; /* 높이 설정 */
+  height: calc(1em * 3); /* 높이 설정 */
 `;
 
 export default function TodayFood() {
@@ -80,7 +79,7 @@ export default function TodayFood() {
       .get("https://zipbab-coin.p-e.kr/main/today-recipe")
       .then((res) => {
         setFoodItems(res.data);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

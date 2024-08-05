@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 56px;
+  margin-top: 21px;
 `;
 
 const Title = styled.h2`
@@ -134,7 +134,7 @@ export default function TodayPrice() {
     axios
       .get(`https://zipbab-coin.p-e.kr/price/today-price`)
       .then((res) => {
-        console.log("API Response:", res.data);
+        //console.log("API Response:", res.data);
 
         if (res.data.highest_price_item && res.data.lowest_price_item) {
           setHighestPriceItem(res.data.highest_price_item);
