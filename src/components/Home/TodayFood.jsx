@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import WhiteWrapContainer from "../container/WhiteWrapContainer";
-import ImageContainer from "../container/ImageContainer";
-import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
-import axios from "axios";
-import "../fonts/OpenSans.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import WhiteWrapContainer from '../container/WhiteWrapContainer';
+import ImageContainer from '../container/ImageContainer';
+import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
+import '../fonts/OpenSans.css';
+import apiClient from '../../apis/ApiClient';
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ const Text = styled.p`
   margin-right: 23px;
   text-align: center;
   justify-content: center;
-  font-family: "OpenSans";
+  font-family: 'OpenSans';
   font-weight: 400;
   font-size: 1rem;
   overflow: hidden;
@@ -75,15 +75,17 @@ export default function TodayFood() {
 
   const [foodItems, setFoodItems] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://zipbab-coin.p-e.kr/main/today-recipe")
-      .then((res) => {
+    const fetchFoodItems = async () => {
+      try {
+        const res = await apiClient.get('/main/today-recipe');
         setFoodItems(res.data);
-        //console.log(res.data);
-      })
-      .catch((err) => {
+        // console.log(res.data);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+
+    fetchFoodItems();
   }, []);
 
   const handleBoxClick = (name) => {
@@ -91,21 +93,14 @@ export default function TodayFood() {
   };
   return (
     <Wrapper>
-      <WhiteWrapContainer height="auto">
+      <WhiteWrapContainer height='auto'>
         <Title>오늘의 집밥</Title>
-        <HorizontalScrollContainer height="auto">
+        <HorizontalScrollContainer height='auto'>
           <ContentWrapper>
             {foodItems.map((item) => (
-              <ContentBox
-                key={item.name}
-                onClick={() => handleBoxClick(item.name)}
-              >
+              <ContentBox key={item.name} onClick={() => handleBoxClick(item.name)}>
                 <WrapImageContainer>
-                  <ImageContainer
-                    width="200px"
-                    height="200px"
-                    imgSrc={item.image}
-                  ></ImageContainer>
+                  <ImageContainer width='200px' height='200px' imgSrc={item.image}></ImageContainer>
                 </WrapImageContainer>
 
                 <Text>{item.name}</Text>

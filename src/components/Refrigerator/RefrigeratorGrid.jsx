@@ -4,7 +4,7 @@ import IngredientDateRemain from './IngredientDateRemain';
 import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import DataErrorMessageContainer from '../container/DataErrorMessageContainer';
-import axios from 'axios';
+import apiClient from '../../apis/ApiClient';
 
 // 배열을 쪼개는 함수
 const chunkArray = (array, size) => {
@@ -21,20 +21,20 @@ export default function RefrigeratorGrid() {
   const [selectedId, setSelectedId] = useState(null);
   const [isDeleteConfirmed, setDeleteConfirmed] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const userId = localStorage.getItem('userId');
 
-  //냉장고 재료 불러오기
   useEffect(() => {
-    axios
-      .get(`https://zipbab-coin.p-e.kr/main/fridge/4`)
+    apiClient
+      .get(`/main/fridge/${userId}`)
       .then((res) => {
         setIngredients(res.data.ingredients);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error('에러:', error);
         setLoading(false);
       });
-  }, []);
+  }, [userId]);
 
   // 바깥 클릭시 selectedId 해제
   useEffect(() => {
@@ -50,9 +50,7 @@ export default function RefrigeratorGrid() {
   //삭제 함수
   const handleDelete = async (id) => {
     try {
-      await axios.request({
-        method: 'delete',
-        url: `https://zipbab-coin.p-e.kr/main/fridge/4`,
+      await apiClient.delete(`/main/fridge/${userId}`, {
         data: {
           fridge_ingredient_id: id,
         },

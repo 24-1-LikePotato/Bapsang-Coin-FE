@@ -1,8 +1,10 @@
 import './App.css';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import NavBar from './components/header/NavBar';
 import NameHeader from './components/header/NameHeader';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { setNavigate } from './apis/ApiClient';
 
 const WrapApp = styled.div`
   max-width: 430px;
@@ -14,6 +16,12 @@ const WrapApp = styled.div`
 `;
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
+
   return (
     <>
       <WrapApp>

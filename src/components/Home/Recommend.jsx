@@ -1,11 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import WhiteWrapContainer from "../container/WhiteWrapContainer";
-import HorizontalScrollContainer from "../container/HorizontalScrollContainer";
-import axios from "axios";
-import "../fonts/OpenSans.css";
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import WhiteWrapContainer from '../container/WhiteWrapContainer';
+import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
+import axios from 'axios';
+import '../fonts/OpenSans.css';
+import apiClient from '../../apis/ApiClient';
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,7 +44,7 @@ const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   //align-items: center;
-  font-family: "OpenSans";
+  font-family: 'OpenSans';
   font-weight: 400;
 `;
 
@@ -80,15 +81,17 @@ export default function Recommend() {
 
   const [recommendItems, setRecommendItems] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://zipbab-coin.p-e.kr/price/recommend-price")
-      .then((res) => {
+    const fetchRecommendItems = async () => {
+      try {
+        const res = await apiClient.get('/price/recommend-price');
         setRecommendItems(res.data);
-        //console.log(res.data);
-      })
-      .catch((err) => {
+        // console.log(res.data);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+
+    fetchRecommendItems();
   }, []);
 
   const handleBoxClick = (ingredient_name) => {
@@ -96,15 +99,12 @@ export default function Recommend() {
   };
   return (
     <Wrapper>
-      <WhiteWrapContainer height="192px">
+      <WhiteWrapContainer height='192px'>
         <Title>추천 식재료</Title>
-        <HorizontalScrollContainer height="120px">
+        <HorizontalScrollContainer height='120px'>
           <ContentWrapper>
             {recommendItems.map((item) => (
-              <ContentBox
-                key={item.ingredient_name}
-                onClick={() => handleBoxClick(item.ingredient_name)}
-              >
+              <ContentBox key={item.ingredient_name} onClick={() => handleBoxClick(item.ingredient_name)}>
                 <TextWrapper>
                   <Name>
                     {item.ingredient_name}
