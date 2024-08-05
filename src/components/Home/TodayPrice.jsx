@@ -1,9 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import WhiteWrapContainer from "../container/WhiteWrapContainer";
-import axios from "axios";
-import "../fonts/OpenSans.css";
+import React from 'react';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import WhiteWrapContainer from '../container/WhiteWrapContainer';
+import axios from 'axios';
+import '../fonts/OpenSans.css';
+import apiClient from '../../apis/ApiClient';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const IncreaseTextWrapper = styled.div`
   margin-left: 20px;
   font-size: min(3.8vw, 16px);
   width: 100%;
-  font-family: "OpenSans";
+  font-family: 'OpenSans';
   font-weight: 400;
 `;
 
@@ -90,7 +91,7 @@ const DecreaseTextWrapper = styled.div`
   margin-left: 20px;
   font-size: min(3.8vw, 16px);
   width: 100%;
-  font-family: "OpenSans";
+  font-family: 'OpenSans';
   font-weight: 400;
 `;
 
@@ -124,45 +125,45 @@ const Bar = styled.div`
 const Unit = styled.span`
   font-size: 0.6rem;
   margin-left: 4px;
-`
+`;
 
 export default function TodayPrice() {
   const [highestPriceItem, setHighestPriceItem] = useState({});
   const [lowestPriceItem, setLowestPriceItem] = useState({});
 
   useEffect(() => {
-    axios
-      .get(`https://zipbab-coin.p-e.kr/price/today-price`)
-      .then((res) => {
-        //console.log("API Response:", res.data);
+    const fetchTodayPrice = async () => {
+      try {
+        const res = await apiClient.get('/price/today-price');
+        // console.log("API Response:", res.data);
 
         if (res.data.highest_price_item && res.data.lowest_price_item) {
           setHighestPriceItem(res.data.highest_price_item);
           setLowestPriceItem(res.data.lowest_price_item);
         } else {
-          console.error("API response structure is not as expected");
+          console.error('API response structure is not as expected');
         }
-      })
-      .catch((err) => {
-        console.error("API Error:", err);
-      });
+      } catch (err) {
+        console.error('API Error:', err);
+      }
+    };
+
+    fetchTodayPrice();
   }, []);
 
   return (
     <Wrapper>
-      <WhiteWrapContainer height="182px">
+      <WhiteWrapContainer height='182px'>
         <Title>오늘의 식재료 가격</Title>
         <IncreaseWrapper>
-          <IncreaseImg src="/assets/icons/increase.png"></IncreaseImg>
+          <IncreaseImg src='/assets/icons/increase.png'></IncreaseImg>
           <IncreaseTextWrapper>
             <IncreaseName>
               {highestPriceItem.ingredient_name}
-              <Unit>{highestPriceItem.unit}</Unit> 
+              <Unit>{highestPriceItem.unit}</Unit>
             </IncreaseName>
             <span>
-              <IncreasePrice>
-                {parseInt(highestPriceItem.price).toLocaleString()}원
-              </IncreasePrice>
+              <IncreasePrice>{parseInt(highestPriceItem.price).toLocaleString()}원</IncreasePrice>
             </span>
             <IncreaseRate>+{highestPriceItem.updown_percent}%</IncreaseRate>
           </IncreaseTextWrapper>
@@ -171,16 +172,14 @@ export default function TodayPrice() {
         <Bar></Bar>
 
         <DecreaseWrapper>
-          <DecreaseImg src="/assets/icons/decrease.png"></DecreaseImg>
+          <DecreaseImg src='/assets/icons/decrease.png'></DecreaseImg>
           <DecreaseTextWrapper>
             <DecreaseName>
-              {lowestPriceItem.ingredient_name} 
+              {lowestPriceItem.ingredient_name}
               <Unit>{lowestPriceItem.unit}</Unit>
             </DecreaseName>
             <span>
-              <DecreasePrice>
-                {parseInt(lowestPriceItem.price).toLocaleString()}원
-              </DecreasePrice>
+              <DecreasePrice>{parseInt(lowestPriceItem.price).toLocaleString()}원</DecreasePrice>
             </span>
             <DecreaseRate>- {lowestPriceItem.updown_percent}%</DecreaseRate>
           </DecreaseTextWrapper>

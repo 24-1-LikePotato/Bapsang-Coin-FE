@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import GongGothicBoldFontStyle from '../components/fonts/GongGothicBoldFontStyle';
+import { useKakaoLogin } from '../apis/KakaoAuth';
+import { checkTokenValidity } from '../apis/ApiClient';
+import { useNavigate } from 'react-router-dom';
+
+export default function LoginMain() {
+  const { handleLogin } = useKakaoLogin();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const isLogIn = await checkTokenValidity();
+      if (isLogIn) {
+        navigate('/home');
+      }
+    };
+
+    checkLogin();
+  }, [navigate]);
+
+  return (
+    <WrapLoginMain>
+      <GongGothicBoldFontStyle />
+      <BowlRiceImg src='/assets/icons/bowl-rice.png' />
+      <LoginMainTxt>집밥코인</LoginMainTxt>
+      <WrapLoginBtn>
+        <KakaoAuthImg src='/assets/images/kakao_login_btn.png' onClick={handleLogin} />
+      </WrapLoginBtn>
+    </WrapLoginMain>
+  );
+}
 
 const WrapLoginMain = styled.div`
   background-color: #ffaa2f;
@@ -33,18 +62,3 @@ const LoginMainTxt = styled.div`
   margin: 1vh;
   text-align: center;
 `;
-
-export default function LoginMain() {
-  return (
-    <WrapLoginMain>
-      <GongGothicBoldFontStyle />
-      <BowlRiceImg src='/assets/icons/bowl-rice.png' />
-      <LoginMainTxt>집밥코인</LoginMainTxt>
-      <WrapLoginBtn>
-        <Link to='/home'>
-          <KakaoAuthImg src='/assets/images/kakao_login_btn.png' />
-        </Link>
-      </WrapLoginBtn>
-    </WrapLoginMain>
-  );
-}

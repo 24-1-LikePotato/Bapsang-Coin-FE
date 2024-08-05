@@ -13,6 +13,8 @@ import Recipe from './pages/Recipe';
 import Refrigerator from './pages/Refrigerator';
 import AddIngredientOne from './pages/AddIngredientOne';
 import AddIngredientTwo from './pages/AddIngredientTwo';
+import KakaoLogin from './pages/KakaoLogin';
+import { CookiesProvider } from 'react-cookie';
 
 const router = createBrowserRouter([
   {
@@ -39,14 +41,17 @@ const router = createBrowserRouter([
       { path: 'addIngredient/2', element: <AddIngredientTwo /> },
     ],
   },
+  { path: 'account/kakao/callback', element: <KakaoLogin /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
   <>
-    <RouterProvider router={router} />
-    <meta name='viewport' content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' />
+    <CookiesProvider>
+      <RouterProvider router={router} />
+      <meta name='viewport' content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' />
+    </CookiesProvider>
   </>
   // </React.StrictMode>
 );

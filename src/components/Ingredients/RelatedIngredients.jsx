@@ -9,8 +9,8 @@ import StyledIcon from '../Button/StyledIcon';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import TitleTextContainer from '../container/TitleTextContainer';
-import axios from 'axios';
 import DataErrorMessageContainer from '../container/DataErrorMessageContainer';
+import apiClient from '../../apis/ApiClient';
 
 export default function RelatedIngredients({ IngredientId, dayPrice }) {
   const navigate = useNavigate();
@@ -19,37 +19,26 @@ export default function RelatedIngredients({ IngredientId, dayPrice }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (IngredientId) {
-      axios
-        .get(`https://zipbab-coin.p-e.kr/main/recipe/search?ingredient=${IngredientId}`)
-        .then((res) => {
-          setRecipes(res.data);
-          setIsLoading(false);
-          if (res.data.length > 0) {
-            setSelectedRecipeId(res.data[0].name);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-        });
-    } else {
-      axios
-        .get(`https://zipbab-coin.p-e.kr/main/related-recipe`)
-        .then((res) => {
-          setRecipes(res.data);
-          setIsLoading(false);
-          if (res.data.length > 0) {
-            setSelectedRecipeId(res.data[0].name);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-        });
-    }
-  }, [IngredientId]);
+    const fetchRecipes = async () => {
+      try {
+        let response;
+        if (IngredientId) {
+          response = await apiClient.get(`/main/recipe/search?ingredient=${IngredientId}`);
+        } else {
+          response = await apiClient.get(`/main/related-recipe`);
+        }
+        setRecipes(response.data);
+        setIsLoading(false);
+        if (response.data.length > 0) {
+          setSelectedRecipeId(response.data[0].name);
+        }
+      } catch (err) {
+        setIsLoading(false);
+      }
+    };
 
+    fetchRecipes();
+  }, [IngredientId]);
   const handleButtonClick = (name) => {
     setSelectedRecipeId(name);
   };

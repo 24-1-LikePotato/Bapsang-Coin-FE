@@ -4,46 +4,35 @@ import styled from 'styled-components';
 import RelatedIngredients from '../components/Ingredients/RelatedIngredients';
 import IngredientInfo from '../components/Ingredients/IngredientInfo';
 import Search from '../components/Input/Search';
-import axios from 'axios';
 import DataErrorMessageContainer from '../components/container/DataErrorMessageContainer';
-
-// 추후 nav바에서 식재료 버튼 클릭시 IngredientId에 랜덤 추천 식재료 id로 이동하는 기능 만들기
+import apiClient from '../apis/ApiClient';
 
 export default function Ingredients() {
   const { IngredientId } = useParams();
-  // 식재료 정보로 넘어가는 데이터
   const [dayPrice, setDayPrice] = useState({});
   const [graphData, setGraphData] = useState({});
   const [isError, setIsError] = useState(false);
+
   useEffect(() => {
-    if (IngredientId) {
-      //검색어를 입력했을 시
-      axios
-        .get(`https://zipbab-coin.p-e.kr/main/search?ingredient=${IngredientId}`)
-        .then((res) => {
-          setIsError(false);
-          setDayPrice(res.data.dayprice);
-          setGraphData(res.data.monthprice);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsError(true);
-        }); //검색어가 존재하지 않을 때
-      //검색어가 존재할 때
-    } else {
-      //검색어를 입력하지 않고 nav바 클릭으로 넘어왔을 시
-      axios
-        .get(`https://zipbab-coin.p-e.kr/main/ingredient`)
-        .then((res) => {
-          setIsError(false);
-          setDayPrice(res.data.dayprice);
-          setGraphData(res.data.monthprice);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsError(true);
-        }); //검색어가 존재하지 않을 때
-    }
+    const fetchData = async () => {
+      try {
+        let res;
+        if (IngredientId) {
+          // 검색어를 입력했을 시
+          res = await apiClient.get(`/main/search?ingredient=${IngredientId}`);
+        } else {
+          // 검색어를 입력하지 않고 nav바 클릭으로 넘어왔을 시
+          res = await apiClient.get(`/main/ingredient`);
+        }
+        setIsError(false);
+        setDayPrice(res.data.dayprice);
+        setGraphData(res.data.monthprice);
+      } catch (err) {
+        setIsError(true);
+      }
+    };
+
+    fetchData();
   }, [IngredientId]);
 
   return (

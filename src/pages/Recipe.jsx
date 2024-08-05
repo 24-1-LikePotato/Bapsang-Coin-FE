@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import '../components/fonts/OpenSans.css';
 import RecipeImage from '../components/Recipe/RecipeImage';
-import RecipeIngredients from "../components/Recipe/RecipeIngredients";
-import RecipeOrder from "../components/Recipe/RecipeOrder";
-import RecipeInfo from "../components/Recipe/RecipeInfo";
+import RecipeIngredients from '../components/Recipe/RecipeIngredients';
+import RecipeOrder from '../components/Recipe/RecipeOrder';
+import RecipeInfo from '../components/Recipe/RecipeInfo';
+import apiClient from '../apis/ApiClient';
 
 const WrapRecipe = styled.div`
   background-color: #fff7ec;
@@ -23,30 +23,28 @@ const Title = styled.div`
   font-family: 'OpenSans';
   font-weight: 700;
   font-size: 1.5rem;
-  color: #3D3D3D;
+  color: #3d3d3d;
   text-align: center;
-`
+`;
 
 export default function Recipe() {
   const { IngredientId, RecipeId } = useParams();
-  const [ recipe, setRecipe ] = useState({
-    name: "",
-    content: "",
-    ingredient_list: "",
-    image: "",
+  const [recipe, setRecipe] = useState({
+    name: '',
+    content: '',
+    ingredient_list: '',
+    image: '',
     calorie: 0,
     carb: 0,
     protein: 0,
     fat: 0,
     natrium: 0,
   });
-  
-  useEffect(() => {
-    const apiURL = `https://zipbab-coin.p-e.kr`;
-    const endpoint = `/main/recipe?name=${RecipeId}`;
 
-    axios.get(apiURL + endpoint)
-      .then((res) => {
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const res = await apiClient.get(`/main/recipe?name=${RecipeId}`);
         setRecipe({
           name: res.data.name,
           content: res.data.content,
@@ -57,24 +55,28 @@ export default function Recipe() {
           protein: res.data.protein,
           fat: res.data.fat,
           natrium: res.data.natrium,
-        })
-      })
-      .catch(err => {
-        console.error("Recipe name not provided");
-      });
+        });
+      } catch (err) {
+        console.error('Recipe name not provided');
+      }
+    };
+
+    fetchRecipe();
   }, [RecipeId]);
 
   return (
     <WrapRecipe>
-      <RecipeImage
-        $imageURL={recipe.image}
+      <RecipeImage $imageURL={recipe.image} />
+      <Title>{recipe.name}</Title>
+      <RecipeIngredients ingredient_list={recipe.ingredient_list} />
+      <RecipeOrder content={recipe.content} />
+      <RecipeInfo
+        calorie={recipe.calorie}
+        carb={recipe.carb}
+        protein={recipe.protein}
+        fat={recipe.fat}
+        natrium={recipe.natrium}
       />
-      <Title>
-        {recipe.name}
-      </Title>
-      <RecipeIngredients ingredient_list={ recipe.ingredient_list }/>
-      <RecipeOrder content={ recipe.content }/>
-      <RecipeInfo calorie={ recipe.calorie } carb={ recipe.carb } protein={ recipe.protein } fat={ recipe.fat } natrium={ recipe.natrium }/>
     </WrapRecipe>
   );
 }
