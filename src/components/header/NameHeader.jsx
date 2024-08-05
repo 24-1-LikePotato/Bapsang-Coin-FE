@@ -47,9 +47,7 @@ const LeftButton = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 12px;
   cursor: pointer;
-  color: #3d3d3d;
 `;
 
 export default function NameHeader() {
@@ -94,7 +92,6 @@ export default function NameHeader() {
         {headerTitle === '집밥코인' ? null : (
           <LeftButton onClick={() => navigate(-1)}>
             <StyledIcon as={SlArrowLeft} width='21px' height='20px' />
-            뒤로가기
           </LeftButton>
         )}
         {headerIcon && <IconWrapper>{headerIcon}</IconWrapper>}
