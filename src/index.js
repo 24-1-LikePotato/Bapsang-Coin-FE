@@ -16,6 +16,12 @@ import AddIngredientTwo from './pages/AddIngredientTwo';
 import KakaoLogin from './pages/KakaoLogin';
 import { CookiesProvider } from 'react-cookie';
 
+const setVh = () => {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`)
+};
+window.addEventListener('resize', setVh);
+setVh();
+
 const router = createBrowserRouter([
   {
     path: '/',
