@@ -23,7 +23,6 @@ const LoginText = styled.p`
 `;
 
 const LoadingIcon = styled(AiOutlineLoading3Quarters)`
-  display: flex;
   flex-direction: column;
   margin-bottom: 50px;
   font-size: 2rem;
