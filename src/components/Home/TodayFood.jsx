@@ -49,25 +49,24 @@ const WrapImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 19px;
+  padding: 5px;
 `;
 
 const Text = styled.p`
   word-break: keep-all;
-  margin-left: 23px;
-  margin-right: 23px;
+  margin: 0 23px;
   text-align: center;
-  justify-content: center;
-  font-family: 'OpenSans';
-  font-weight: 400;
-  font-size: 1rem;
+  font-family: 'OpenSans', sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #3d3d3d;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  white-space: normal; /* white-space 속성을 normal로 설정 */
-  height: calc(1em * 3); /* 높이 설정 */
+  white-space: normal;
+  height: calc(1em * 3);
 `;
 
 export default function TodayFood() {
