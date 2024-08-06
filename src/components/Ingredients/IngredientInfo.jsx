@@ -73,7 +73,10 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
             <IngredientPriceText>
               <strong>전일 등락율</strong>
               <PriceFluctionRate $rate={dayPrice.updown}>
-                {`${dayPrice.updown ? `-` : `+`}` + dayPrice.updown_percent}%
+                {dayPrice.updown_percent === 0
+                  ? `+${dayPrice.updown_percent}`
+                  : `${dayPrice.updown ? `-` : `+`}` + dayPrice.updown_percent}
+                %
               </PriceFluctionRate>
             </IngredientPriceText>
           </WrapIngredientPrice>
@@ -107,5 +110,5 @@ const IngredientPriceText = styled.div`
 
 const PriceFluctionRate = styled.span`
   font-weight: bold;
-  color: ${({ $rate }) => (parseFloat($rate) === 0 ? 'red' : 'blue')};
+  color: ${({ $rate }) => (parseFloat($rate) === 2 ? 'orange' : parseFloat($rate) === 0 ? 'red' : 'blue')};
 `;
