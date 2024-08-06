@@ -77,11 +77,9 @@ const refreshAccessToken = async () => {
     const accessTokenExpiry = new Date();
 
     accessTokenExpiry.setHours(accessTokenExpiry.getHours() + 1);
-    //test용 access token 10초 만료
-    // accessTokenExpiry.setSeconds(accessTokenExpiry.getSeconds() + 10);
     cookies.set('accessToken', newAccessToken, {
       path: '/',
-      secure: false, // HTTPS를 사용하지 않는 경우 false로 설정
+      secure: true, // HTTPS를 사용하지 않는 경우 false로 설정
       expires: accessTokenExpiry,
     });
 
