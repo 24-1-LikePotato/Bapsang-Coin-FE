@@ -23,8 +23,8 @@ const LoginText = styled.p`
 `;
 
 const LoadingIcon = styled(AiOutlineLoading3Quarters)`
-  position: absolute;
-  top: 330px;
+  flex-direction: column;
+  margin-bottom: 50px;
   font-size: 2rem;
   color: #ffaa2f;
   animation: spin 2s linear infinite;
