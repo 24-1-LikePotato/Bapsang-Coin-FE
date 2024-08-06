@@ -19,6 +19,16 @@ export default function IngredientDateRemain({
     e.stopPropagation();
     setModalOpen(true);
   };
+  const IngredientStatus = ({ ingredientRemain }) => {
+    const status =
+      ingredientRemain === 0
+        ? '오늘 만료'
+        : ingredientRemain < 0
+        ? `${Math.abs(ingredientRemain)}일 지남`
+        : `${ingredientRemain}일 남음`;
+
+    return <strong>{status}</strong>;
+  };
 
   return (
     <WrapIngredientDateRemain className='ingredient-item' onClick={() => onSelect(id)}>
@@ -28,7 +38,7 @@ export default function IngredientDateRemain({
             <RxCross2 />
           </DeleteButton>
           {ingredientName}
-          <strong>{ingredientRemain}일 남음</strong>
+          <IngredientStatus ingredientRemain={ingredientRemain} />
         </IngredientDateRemainText>
       </StyledWhiteWrapContainer>
       {isModalOpen && <RefrigeratorModalOverlay onDelete={onDelete} setModalOpen={setModalOpen} id={id} />}
