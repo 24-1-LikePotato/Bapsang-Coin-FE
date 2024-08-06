@@ -7,7 +7,6 @@ import Recommend from "../components/Home/Recommend";
 import TodayPrice from "../components/Home/TodayPrice";
 import TodayFood from "../components/Home/TodayFood";
 
-
 const Background = styled.div`
   min-height: 100vh;
   background-color: #fff7ec;
@@ -18,7 +17,7 @@ export default function Home() {
     <>
       <Background>
         <Search />
-        <TodayPrice/>
+        <TodayPrice />
         <Recommend />
         <TodayFood />
       </Background>
