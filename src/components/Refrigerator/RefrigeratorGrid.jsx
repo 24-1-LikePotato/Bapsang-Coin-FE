@@ -5,6 +5,7 @@ import HorizontalScrollContainer from '../container/HorizontalScrollContainer';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import DataErrorMessageContainer from '../container/DataErrorMessageContainer';
 import apiClient from '../../apis/ApiClient';
+import GridPagination from './GridPagination';
 
 // 배열을 쪼개는 함수
 const chunkArray = (array, size) => {
@@ -21,6 +22,7 @@ export default function RefrigeratorGrid() {
   const [selectedId, setSelectedId] = useState(null);
   const [isDeleteConfirmed, setDeleteConfirmed] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [visibleIndex, setVisibleIndex] = useState(null);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -77,10 +79,37 @@ export default function RefrigeratorGrid() {
     setDeleteConfirmed(false);
   };
 
+  // grid pagination 함수
+  useEffect(() => {
+    const observers = [];
+    const elements = document.querySelectorAll('.container-wrapper');
+
+    elements.forEach((element, index) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleIndex(index);
+            }
+          });
+        },
+        {
+          threshold: 0.5, //50퍼 넘어갈 때 넘기기
+        }
+      );
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [chunkedIngredients]);
+
   return (
     <>
       <WrapGridContainer>
-        <HorizontalScrollContainer width='266px' height='380px'>
+        <HorizontalScrollContainer width='266px' height='330px'>
           {isLoading ? (
             <WrapDataErrorMessage>
               <DataErrorMessageContainer margin='150px auto'>로딩중 ...</DataErrorMessageContainer>
@@ -88,7 +117,7 @@ export default function RefrigeratorGrid() {
           ) : ingredients && ingredients.length !== 0 ? (
             <HorizontalWrapper>
               {chunkedIngredients.map((chunk, chunkIdx) => (
-                <ContainerWrapper key={chunkIdx}>
+                <ContainerWrapper key={chunkIdx} className='container-wrapper'>
                   <WrapChunk>
                     {chunk.map((ingredient, idx) => (
                       <IngredientDateRemain
@@ -115,6 +144,7 @@ export default function RefrigeratorGrid() {
         </HorizontalScrollContainer>
       </WrapGridContainer>
       <DeleteConfirmationModal isVisible={isDeleteConfirmed} onClose={handleCloseModal} />
+      {visibleIndex !== null && <GridPagination idx={visibleIndex} maxPageIdx={chunkedIngredients.length} />}
     </>
   );
 }

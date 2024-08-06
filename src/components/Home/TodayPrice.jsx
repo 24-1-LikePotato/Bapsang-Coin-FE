@@ -48,8 +48,6 @@ const IncreaseTextWrapper = styled.div`
 `;
 
 const IncreaseName = styled.div`
-  display: flex;
-  align-items: center;
   font-weight: 500;
   color: #3d3d3d;
   text-align: left;
