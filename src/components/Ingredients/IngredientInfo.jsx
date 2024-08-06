@@ -71,7 +71,7 @@ export default function IngredientInfo({ IngredientId, dayPrice, graphData }) {
               {dayPrice.price.toLocaleString()}원
             </IngredientPriceText>
             <IngredientPriceText>
-              <strong>등락율</strong>
+              <strong>전일 등락율</strong>
               <PriceFluctionRate $rate={dayPrice.updown}>
                 {`${dayPrice.updown ? `-` : `+`}` + dayPrice.updown_percent}%
               </PriceFluctionRate>
@@ -94,14 +94,14 @@ const WrapIngredientPrice = styled.div`
   display: flex;
   flex-direction: row;
   border-bottom: 0.7px solid #e3e3e3;
-  padding: 0px 10px;
+  padding: 0px 3px;
 `;
 
 const IngredientPriceText = styled.div`
-  margin: 8px 12px;
+  margin: 8px 1.85vw;
   font-size: min(4vw, 15px);
   strong {
-    margin-right: 12px;
+    margin-right: 6px;
   }
 `;
 
