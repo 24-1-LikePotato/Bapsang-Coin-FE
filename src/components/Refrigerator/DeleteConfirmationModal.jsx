@@ -50,5 +50,6 @@ const DeleteCompleteModal = styled.div`
   padding: 12px 20px;
   border-radius: 25px;
   z-index: 1000;
+  font-size: 14px;
   animation: ${(props) => (props.$fadeOut ? fadeOut : fadeIn)} 1s forwards;
 `;
