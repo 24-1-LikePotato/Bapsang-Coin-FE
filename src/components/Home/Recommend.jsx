@@ -111,7 +111,7 @@ export default function Recommend() {
                     <Unit>{item.unit}</Unit>
                   </Name>
                   <Price>{parseInt(item.price).toLocaleString()}원</Price>
-                  <Rate>{item.updown_percent}%</Rate>
+                  <Rate>-{item.updown_percent}%</Rate>
                 </TextWrapper>
               </ContentBox>
             ))}
